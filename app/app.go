@@ -26,8 +26,8 @@ func main() {
 	})
 
 	defer func() {
-		err := zapLogger.Sync()
-		if err != nil {
+		er := zapLogger.Sync()
+		if er != nil {
 			log.Printf("error during sync logger: %v", err.Error())
 		}
 	}()
