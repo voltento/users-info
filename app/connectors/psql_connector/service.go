@@ -18,10 +18,10 @@ type dataBase struct {
 	logger *zap.Logger
 }
 
-func NewPsqlStorage(cfg *Config, logger *zap.Logger) (error, connectors.Storage) {
-	err, opts := configToPgOptions(cfg)
+func NewPsqlStorage(cfg *Config, logger *zap.Logger) (connectors.Storage, error) {
+	opts, err := configToPgOptions(cfg)
 	if err != nil {
-		return errors.Wrap(err, "can not create database"), nil
+		return nil, errors.Wrap(err, "can not create database")
 	}
 
 	d := &dataBase{
@@ -31,24 +31,24 @@ func NewPsqlStorage(cfg *Config, logger *zap.Logger) (error, connectors.Storage)
 
 	err = d.HealthCheck()
 	if err != nil {
-		return errors.Wrap(err, "can not create database"), nil
+		return nil, errors.Wrap(err, "can not create database")
 	}
 
-	return nil, d
+	return d, nil
 }
 
-func (d *dataBase) Users() (error, []model.User) {
-	err, dtoUsers := d.GetUsers()
+func (d *dataBase) Users() ([]model.User, error) {
+	dtoUsers, err := d.GetUsers()
 	if err != nil {
 		d.logger.Error("failed")
-		return errors.Wrap(err, "cant get users"), nil
+		return nil, errors.Wrap(err, "cant get users")
 	}
 	d.logger.Sugar().Debugf("get %v users from database", len(dtoUsers))
 	users := make([]model.User, 0, len(dtoUsers))
 	for _, u := range dtoUsers {
 		users = append(users, dtoUserToModelUser(u))
 	}
-	return nil, users
+	return users, nil
 }
 
 func (d *dataBase) HealthCheck() error {
@@ -57,16 +57,16 @@ func (d *dataBase) HealthCheck() error {
 	return err
 }
 
-func (d *dataBase) GetUsers() (error, []*User) {
+func (d *dataBase) GetUsers() ([]*User, error) {
 	return d.GetUsersWithCtx(nil)
 }
 
-func (d *dataBase) GetUsersWithCtx(ctx context.Context) (error, []*User) {
+func (d *dataBase) GetUsersWithCtx(ctx context.Context) ([]*User, error) {
 	var users []*User
 	pg.Scan("")
 	err := d.db.WithContext(ctx).Model().Table(tableNameUsersInfo).Select(&users)
 
-	return err, users
+	return users, err
 }
 
 func (d *dataBase) Stop() error {

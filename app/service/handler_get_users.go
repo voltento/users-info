@@ -6,7 +6,7 @@ import (
 )
 
 func (s *Service) GetUsers(ctx *gin.Context) {
-	err, users := s.storage.Users()
+	users, err := s.storage.Users()
 	if err != nil {
 		// TODO
 	}

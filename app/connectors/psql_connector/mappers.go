@@ -7,9 +7,9 @@ import (
 )
 
 // TODO: add tests
-func configToPgOptions(cfg *Config) (error, *pg.Options) {
+func configToPgOptions(cfg *Config) (*pg.Options, error) {
 	if cfg == nil {
-		return errors.New("empty value provided"), nil
+		return nil, errors.New("empty value provided")
 	}
 
 	opts := &pg.Options{
@@ -19,18 +19,18 @@ func configToPgOptions(cfg *Config) (error, *pg.Options) {
 	}
 
 	if len(opts.User) == 0 {
-		return errors.New("empty user provided"), nil
+		return nil, errors.New("empty user provided")
 	}
 
 	if len(opts.Password) == 0 {
-		return errors.New("empty password provided"), nil
+		return nil, errors.New("empty password provided")
 	}
 
 	if len(opts.Database) == 0 {
-		return errors.New("empty database provided"), nil
+		return nil, errors.New("empty database provided")
 	}
 
-	return nil, opts
+	return opts, nil
 }
 
 // TODO: add tests

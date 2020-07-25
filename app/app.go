@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	err, di := di()
+	di, err := di()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -34,36 +34,36 @@ func main() {
 	err = errors.Wrap(err, "server finished")
 }
 
-func di() (error, *dig.Container) {
+func di() (*dig.Container, error) {
 	di := dig.New()
 	err := di.Provide(db.NewPsqlStorage)
 	if err != nil {
-		return err, nil
+		return nil, err
 	}
 
 	err = di.Provide(config.NewDefaultConfigs)
 	if err != nil {
-		return err, nil
+		return nil, err
 	}
 
 	err = di.Provide(func(cfg *logger.Config) (*zap.Logger, error) {
 		return logger.NewLogger(cfg)
 	})
 	if err != nil {
-		return err, nil
+		return nil, err
 	}
 
 	err = di.Provide(func(logger *zap.Logger) *zap.SugaredLogger {
 		return logger.Sugar()
 	})
 	if err != nil {
-		return err, nil
+		return nil, err
 	}
 
 	err = di.Provide(service.NewService)
 	if err != nil {
-		return err, nil
+		return nil, err
 	}
 
-	return err, di
+	return di, err
 }
