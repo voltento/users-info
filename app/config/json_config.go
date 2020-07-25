@@ -3,10 +3,11 @@ package config
 import (
 	"encoding/json"
 	"io/ioutil"
+	"path/filepath"
 )
 
 func NewConfigFromFile(path string) (*Config, error) {
-	data, err := ioutil.ReadFile(path)
+	data, err := ioutil.ReadFile(filepath.Clean(path))
 	if err != nil {
 		return nil, err
 	}
