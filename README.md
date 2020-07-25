@@ -7,7 +7,7 @@ App architecture
 
 ### Architecture 
 https://miro.com/app/board/o9J_ko_Lm30=/
-- repository
+- model
  - dto
 - service
   - receive a connector interface for getting/sending data
@@ -49,4 +49,5 @@ Will use this https://github.com/go-pg/pg/blob/ee50368e25f8/base.go#L296
 
 ### Ideas for improvements
 - use migrations system f.i. https://github.com/pressly/goose
+- add country code set
 

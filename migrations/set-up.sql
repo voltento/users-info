@@ -1,7 +1,7 @@
-CREATE TABLE IF NOT EXISTS users_info (
-    userid    serial PRIMARY KEY,
-    firstname varchar(40) NOT NULL,
-    lastname varchar(40) NOT NULL,
+CREATE TABLE IF NOT EXISTS users (
+    user_id    serial PRIMARY KEY,
+    first_name varchar(40) NOT NULL,
+    last_name varchar(40) NOT NULL,
     email varchar(40) NOT NULL UNIQUE,
-    countrycode varchar(5) NOT NULL
+    country_code varchar(5) NOT NULL
 );
