@@ -1,0 +1,14 @@
+{
+  "database": {
+    "user": "users-info",
+    "password": "users-info",
+    "database": "users-info"
+  },
+  "logger": {
+    "level": "debug"
+  },
+  "service": {
+    "address": "localhost:8181",
+    "log_gin_gonic": false
+  }
+}

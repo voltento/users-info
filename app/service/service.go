@@ -55,7 +55,7 @@ func NewService(config *Config, logger *zap.SugaredLogger, storage connectors.St
 }
 
 func (s *Service) Run() error {
-	er := s.engine.Run(s.config.Addr)
+	er := s.engine.Run(s.config.Address)
 	s.Stop()
 	return er
 }

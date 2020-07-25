@@ -9,6 +9,7 @@ require (
 	github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e // indirect
 	github.com/onsi/ginkgo v1.14.0 // indirect
 	github.com/pkg/errors v0.9.1
+	github.com/stretchr/testify v1.4.0
 	go.uber.org/dig v1.10.0
 	go.uber.org/zap v1.15.0
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect

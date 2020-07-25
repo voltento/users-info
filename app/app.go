@@ -49,7 +49,12 @@ func di() (*dig.Container, error) {
 		return nil, err
 	}
 
-	err = di.Provide(config.NewDefaultConfigs)
+	err = di.Provide(config.NewConfig)
+	if err != nil {
+		return nil, err
+	}
+
+	err = di.Provide(config.GetConfigs)
 	if err != nil {
 		return nil, err
 	}

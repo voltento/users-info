@@ -1,26 +1,31 @@
 package config
 
 import (
+	"flag"
 	db "github.com/voltento/users-info/app/connectors/psql_connector"
 	"github.com/voltento/users-info/app/logger"
 	"github.com/voltento/users-info/app/service"
-	"net"
+	"log"
 )
 
-func NewDefaultConfigs() (*logger.Config, *db.Config, *service.Config) {
-	dbConfig := &db.Config{
-		User:     "users-info",
-		Password: "users-info",
-		Database: "users-info",
-	}
-	loggerConfig := &logger.Config{
-		Level: "debug",
+type Config struct {
+	Database *db.Config
+	Logger   *logger.Config
+	Service  *service.Config
+}
+
+func NewConfig() (*Config, error) {
+	path := flag.String("config", "", "help message for flagname")
+	flag.Parse()
+	if path == nil || len(*path) == 0 {
+		log.Printf("no config path. use default config")
+		return NewDefaultConfig(), nil
 	}
 
-	serviceConfig := &service.Config{
-		Addr:        net.JoinHostPort("localhost", "8181"),
-		LogGinGonic: false,
-	}
+	log.Printf("load config from file '%v'", *path)
+	return NewConfigFromFile(*path)
+}
 
-	return loggerConfig, dbConfig, serviceConfig
+func GetConfigs(cfg *Config) (*db.Config, *logger.Config, *service.Config) {
+	return cfg.Database, cfg.Logger, cfg.Service
 }

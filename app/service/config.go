@@ -1,6 +1,6 @@
 package service
 
 type Config struct {
-	Addr        string
-	LogGinGonic bool
+	Address     string
+	LogGinGonic bool `json:"log_gin_gonic"`
 }
