@@ -6,6 +6,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/voltento/users-info/app/connectors"
 	"github.com/voltento/users-info/app/model"
+	"go.uber.org/zap"
 )
 
 const (
@@ -13,17 +14,19 @@ const (
 )
 
 type dataBase struct {
-	db *pg.DB
+	db     *pg.DB
+	logger *zap.Logger
 }
 
-func NewDatabase(cfg *Config) (error, connectors.Storage) {
+func NewPsqlStorage(cfg *Config, logger *zap.Logger) (error, connectors.Storage) {
 	err, opts := configToPgOptions(cfg)
 	if err != nil {
 		return errors.Wrap(err, "can not create database"), nil
 	}
 
 	d := &dataBase{
-		db: pg.Connect(opts),
+		db:     pg.Connect(opts),
+		logger: logger.Named("psqlstorage"),
 	}
 
 	err = d.HealthCheck()
@@ -35,11 +38,12 @@ func NewDatabase(cfg *Config) (error, connectors.Storage) {
 }
 
 func (d *dataBase) Users() (error, []model.User) {
-	// todo: add log
 	err, dtoUsers := d.GetUsers()
 	if err != nil {
+		d.logger.Error("failed")
 		return errors.Wrap(err, "cant get users"), nil
 	}
+	d.logger.Sugar().Debugf("get %v users from database", len(dtoUsers))
 	users := make([]model.User, 0, len(dtoUsers))
 	for _, u := range dtoUsers {
 		users = append(users, dtoUserToModelUser(u))

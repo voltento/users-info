@@ -7,10 +7,6 @@ App architecture
 
 ### Architecture 
 https://miro.com/app/board/o9J_ko_Lm30=/
-- model
- - dto
-- service
-  - receive a connector interface for getting/sending data
 
 - connectors
   - postgreSQl connector: get data, put data
@@ -41,6 +37,9 @@ Will use this https://github.com/go-pg/pg/blob/ee50368e25f8/base.go#L296
 - Add tests
 - Add logger into all
 - Integrate health check
+- Use swagger for documentation
+- turn of gingonic log output
+- pretyfy zap output
 
 
 ### Assemptations
