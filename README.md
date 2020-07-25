@@ -31,14 +31,13 @@ Will use this https://github.com/go-pg/pg/blob/ee50368e25f8/base.go#L296
 - health check
 
 ### TODO:
-- Create database
-- Add migrations
 - Pack app into docker
 - Add tests
 - Add logger into all
 - Integrate health check
 - Use swagger for documentation
-- pretyfy zap output
+- notify mechanizm
+- config
 
 
 ### Assemptations

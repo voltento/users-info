@@ -9,12 +9,12 @@ import (
 
 type Service struct {
 	storage connectors.Storage
-	config  Config
+	config  *Config
 	engine  *gin.Engine
 	logger  *zap.SugaredLogger
 }
 
-func NewService(config Config, logger *zap.SugaredLogger) (error, *Service) {
+func NewService(config *Config, logger *zap.SugaredLogger, storage connectors.Storage) (error, *Service) {
 	var engine *gin.Engine
 	if !config.LogGinGonic {
 		engine = gin.New()
@@ -44,7 +44,7 @@ func NewService(config Config, logger *zap.SugaredLogger) (error, *Service) {
 	}
 
 	s := &Service{
-		storage: config.Storage,
+		storage: storage,
 		config:  config,
 		engine:  engine,
 	}

@@ -2,14 +2,13 @@ package main
 
 import (
 	"github.com/pkg/errors"
-	"github.com/voltento/users-info/app/connectors"
+	"github.com/voltento/users-info/app/config"
 	db "github.com/voltento/users-info/app/connectors/psql_connector"
 	"github.com/voltento/users-info/app/logger"
 	"github.com/voltento/users-info/app/service"
 	"go.uber.org/dig"
 	"go.uber.org/zap"
 	"log"
-	"net"
 )
 
 func main() {
@@ -42,33 +41,7 @@ func di() (error, *dig.Container) {
 		return err, nil
 	}
 
-	err = di.Provide(func() *db.Config {
-		return &db.Config{
-			User:     "users-info",
-			Password: "users-info",
-			Database: "users-info",
-		}
-	})
-	if err != nil {
-		return err, nil
-	}
-
-	err = di.Provide(func(s connectors.Storage) service.Config {
-		return service.Config{
-			Addr:        net.JoinHostPort("localhost", "8181"),
-			Storage:     s,
-			LogGinGonic: false,
-		}
-	})
-	if err != nil {
-		return err, nil
-	}
-
-	err = di.Provide(func() *logger.Config {
-		return &logger.Config{
-			Level: "debug",
-		}
-	})
+	err = di.Provide(config.NewDefaultConfigs)
 	if err != nil {
 		return err, nil
 	}
