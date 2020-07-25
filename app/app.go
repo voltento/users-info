@@ -39,6 +39,7 @@ func main() {
 	err = serv.Run()
 	serv.Stop()
 	err = errors.Wrap(err, "server finished")
+	zapLogger.Error(err.Error())
 }
 
 func di() (*dig.Container, error) {

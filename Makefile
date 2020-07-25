@@ -1,3 +1,8 @@
+
+# tools
+golint:
+	 golangci-lint run
+
 # db
 migrations_path="migrations"
 db_creds="host=localhost port=5432 dbname=users-info user=users-info password=users-info"

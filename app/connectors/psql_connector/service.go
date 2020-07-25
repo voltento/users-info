@@ -58,7 +58,7 @@ func (d *dataBase) HealthCheck() error {
 }
 
 func (d *dataBase) GetUsers() ([]*User, error) {
-	return d.GetUsersWithCtx(nil)
+	return d.GetUsersWithCtx(context.TODO())
 }
 
 func (d *dataBase) GetUsersWithCtx(ctx context.Context) ([]*User, error) {
