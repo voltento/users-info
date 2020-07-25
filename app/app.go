@@ -18,12 +18,19 @@ func main() {
 	}
 
 	var serv *service.Service
-	var logger *zap.Logger
-	defer logger.Sync()
+	var zapLogger *zap.Logger
+
 	err = di.Invoke(func(s *service.Service, l *zap.Logger) {
 		serv = s
-		logger = l
+		zapLogger = l
 	})
+
+	defer func() {
+		err := zapLogger.Sync()
+		if err != nil {
+			log.Printf("error during sync logger: %v", err.Error())
+		}
+	}()
 
 	if err != nil {
 		log.Fatal(err.Error())
