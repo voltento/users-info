@@ -68,3 +68,7 @@ func (d *dataBase) GetUsersWithCtx(ctx context.Context) (error, []*User) {
 
 	return err, users
 }
+
+func (d *dataBase) Stop() error {
+	return d.db.Close()
+}

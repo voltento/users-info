@@ -38,7 +38,6 @@ Will use this https://github.com/go-pg/pg/blob/ee50368e25f8/base.go#L296
 - Add logger into all
 - Integrate health check
 - Use swagger for documentation
-- turn of gingonic log output
 - pretyfy zap output
 
 
