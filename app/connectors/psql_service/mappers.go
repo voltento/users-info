@@ -1,9 +1,10 @@
-package psql_connector
+package psql_service
 
 import (
 	"errors"
 	"github.com/go-pg/pg"
 	"github.com/voltento/users-info/app/model"
+	"strconv"
 )
 
 // TODO: add tests
@@ -36,7 +37,7 @@ func configToPgOptions(cfg *Config) (*pg.Options, error) {
 // TODO: add tests
 func dtoUserToModelUser(dtoUser *User) model.User {
 	return model.User{
-		UserId:      dtoUser.UserId,
+		UserId:      strconv.Itoa(dtoUser.UserId),
 		FirstName:   dtoUser.FirstName,
 		SecondName:  dtoUser.LastName,
 		Email:       dtoUser.Email,

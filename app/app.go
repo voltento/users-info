@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/pkg/errors"
 	"github.com/voltento/users-info/app/config"
-	db "github.com/voltento/users-info/app/connectors/psql_connector"
+	db "github.com/voltento/users-info/app/connectors/psql_service"
 	"github.com/voltento/users-info/app/logger"
 	"github.com/voltento/users-info/app/service"
 	"go.uber.org/dig"

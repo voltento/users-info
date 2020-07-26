@@ -42,6 +42,8 @@ Will use this https://github.com/go-pg/pg/blob/ee50368e25f8/base.go#L296
 - Integrate health check
 - Use swagger for documentation
 - notify mechanizm
+- add check if it's internal error or not
+- add limitations for getUsers enteties count
 
 
 ### Assemptations

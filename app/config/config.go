@@ -2,7 +2,7 @@ package config
 
 import (
 	"flag"
-	db "github.com/voltento/users-info/app/connectors/psql_connector"
+	db "github.com/voltento/users-info/app/connectors/psql_service"
 	"github.com/voltento/users-info/app/logger"
 	"github.com/voltento/users-info/app/service"
 	"log"

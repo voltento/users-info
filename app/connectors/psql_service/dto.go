@@ -1,4 +1,4 @@
-package psql_connector
+package psql_service
 
 type User struct {
 	UserId      int

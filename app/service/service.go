@@ -47,6 +47,7 @@ func NewService(config *Config, logger *zap.SugaredLogger, storage connectors.St
 		storage: storage,
 		config:  config,
 		engine:  engine,
+		logger:  logger,
 	}
 
 	s.ConnectHandlers()
@@ -62,6 +63,7 @@ func (s *Service) Run() error {
 
 func (s *Service) ConnectHandlers() {
 	s.engine.GET("/users", s.GetUsers)
+	s.engine.GET("/user/:userid", s.GetUser)
 }
 
 func (s *Service) Stop() {
