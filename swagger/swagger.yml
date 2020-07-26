@@ -31,12 +31,16 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
-  /user/{userid}:
+  /user/:
     get:
       summary: Get user by id
       operationId: GetUserById
       parameters:
-        - $ref: '#/parameters/userId'
+        - $ref: '#/parameters/user_id'
+        - $ref: '#/parameters/first_name'
+        - $ref: '#/parameters/second_name'
+        - $ref: '#/parameters/email'
+        - $ref: '#/parameters/country_code'
 
       responses:
         200:
@@ -54,11 +58,35 @@ paths:
 
 
 parameters:
-  userId:
-    name: orderId
-    in: path
+  user_id:
+    name: user_id
+    in: query
     description: User identificator
-    required: true
+    type: string
+
+  first_name:
+    name: first_name
+    in: query
+    description: User first_name
+    type: string
+
+  second_name:
+    name: second_name
+    in: query
+    description: User second_name
+    type: string
+
+
+  country_code:
+    name: country_code
+    in: query
+    description: User country_code
+    type: string
+
+  email:
+    name: email
+    in: query
+    description: User email
     type: string
 
 definitions:

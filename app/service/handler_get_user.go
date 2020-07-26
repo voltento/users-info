@@ -8,14 +8,9 @@ import (
 )
 
 func (s *Service) GetUser(ctx *gin.Context) {
-	var userParam model.User
-	if err := ctx.ShouldBindUri(&userParam); err != nil {
-		ctx.JSON(400, gin.H{"msg": err.Error()})
-		s.logger.Error(err.Error())
-		return
-	}
+	userParam := bindUser(ctx)
 
-	user, err := s.storage.User(&userParam)
+	user, err := s.storage.User(userParam)
 	if err != nil {
 		err = errors.Wrap(err, "processing getUsers")
 		s.logger.Error(err.Error())

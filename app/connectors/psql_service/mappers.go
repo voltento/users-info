@@ -54,12 +54,14 @@ func modelUserToDtoUser(user *model.User) (*User, error) {
 		CountryCode: user.CountryCode,
 	}
 
-	id, err := strconv.Atoi(user.UserId)
-	if err != nil {
-		return nil, errors.Wrap(err, fmt.Sprintf("can not convert userId '%v' to the dto user id", user.UserId))
-	}
+	if len(user.UserId) > 0 {
+		id, err := strconv.Atoi(user.UserId)
+		if err != nil {
+			return nil, errors.Wrap(err, fmt.Sprintf("can not convert userId '%v' to the dto user id", user.UserId))
+		}
 
-	u.UserId = id
+		u.UserId = id
+	}
 
 	return u, nil
 }

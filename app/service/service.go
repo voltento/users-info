@@ -63,7 +63,7 @@ func (s *Service) Run() error {
 
 func (s *Service) ConnectHandlers() {
 	s.engine.GET("/users", s.GetUsers)
-	s.engine.GET("/user/:userid", s.GetUser)
+	s.engine.GET("/user", s.GetUser)
 }
 
 func (s *Service) Stop() {
