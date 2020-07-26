@@ -6,8 +6,13 @@ import (
 	"github.com/voltento/users-info/app/model"
 )
 
-func (d *dataBase) Users() ([]model.User, error) {
-	dtoUsers, err := d.GetUsers()
+func (d *dataBase) Users(modelUser *model.User) ([]model.User, error) {
+	dtoModel, err := modelUserToDtoUser(modelUser)
+	if err != nil {
+		return nil, err
+	}
+
+	dtoUsers, err := d.GetUsers(dtoModel)
 	if err != nil {
 		d.logger.Error("failed")
 		return nil, errors.Wrap(err, "cant get users")
@@ -20,13 +25,15 @@ func (d *dataBase) Users() ([]model.User, error) {
 	return users, nil
 }
 
-func (d *dataBase) GetUsers() ([]*User, error) {
-	return d.GetUsersWithCtx(context.TODO())
+func (d *dataBase) GetUsers(ormUser *User) ([]*User, error) {
+	return d.GetUsersWithCtx(ormUser, context.TODO())
 }
 
-func (d *dataBase) GetUsersWithCtx(ctx context.Context) ([]*User, error) {
+func (d *dataBase) GetUsersWithCtx(ormUser *User, ctx context.Context) ([]*User, error) {
 	var users []*User
-	err := d.db.WithContext(ctx).Model().Table(tableNameUsersInfo).Select(&users)
+	q := d.db.WithContext(ctx).Model().Table(tableNameUsersInfo)
+	q = buildUserWhereEqual(ormUser, q)
+	err := q.Select(&users)
 
 	return users, err
 }

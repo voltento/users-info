@@ -17,6 +17,12 @@ paths:
     get:
       summary: Get all users
       operationId: GetUsers
+      parameters:
+        - $ref: '#/parameters/user_id'
+        - $ref: '#/parameters/first_name'
+        - $ref: '#/parameters/second_name'
+        - $ref: '#/parameters/email'
+        - $ref: '#/parameters/country_code'
       responses:
         200:
           description: General information about users
@@ -31,17 +37,12 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
-  /user/:
+  /user/{user_id}:
     get:
       summary: Get user by id
       operationId: GetUserById
       parameters:
-        - $ref: '#/parameters/user_id'
-        - $ref: '#/parameters/first_name'
-        - $ref: '#/parameters/second_name'
-        - $ref: '#/parameters/email'
-        - $ref: '#/parameters/country_code'
-
+        - $ref: '#/parameters/user_id_in_path'
       responses:
         200:
           description: General information about user
@@ -63,6 +64,13 @@ parameters:
     in: query
     description: User identificator
     type: string
+
+  user_id_in_path:
+    name: user_id
+    in: path
+    description: User identificator
+    type: string
+    required: true
 
   first_name:
     name: first_name

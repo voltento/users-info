@@ -8,9 +8,8 @@ import (
 )
 
 func (s *Service) GetUser(ctx *gin.Context) {
-	userParam := bindUser(ctx)
-
-	user, err := s.storage.User(userParam)
+	id := ctx.Query("user_id")
+	user, err := s.storage.User(id)
 	if err != nil {
 		err = errors.Wrap(err, "processing getUsers")
 		s.logger.Error(err.Error())
