@@ -8,7 +8,6 @@ import (
 	"strconv"
 )
 
-// TODO: add tests
 func configToPgOptions(cfg *Config) (*pg.Options, error) {
 	if cfg == nil {
 		return nil, errors.New("empty value provided")
@@ -35,7 +34,6 @@ func configToPgOptions(cfg *Config) (*pg.Options, error) {
 	return opts, nil
 }
 
-// TODO: add tests
 func dtoUserToModelUser(dtoUser *User) model.User {
 	return model.User{
 		UserId:      strconv.Itoa(dtoUser.UserId),

@@ -1,4 +1,4 @@
-package connectors
+package psql_service
 
 import "github.com/voltento/users-info/app/model"
 

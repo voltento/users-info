@@ -3,7 +3,6 @@ package psql_service
 import (
 	"github.com/go-pg/pg"
 	"github.com/pkg/errors"
-	"github.com/voltento/users-info/app/connectors"
 	"go.uber.org/zap"
 )
 
@@ -17,7 +16,7 @@ type dataBase struct {
 	logger *zap.Logger
 }
 
-func NewPsqlStorage(cfg *Config, logger *zap.Logger) (connectors.Storage, error) {
+func NewPsqlStorage(cfg *Config, logger *zap.Logger) (Storage, error) {
 	opts, err := configToPgOptions(cfg)
 	if err != nil {
 		return nil, errors.Wrap(err, "can not create database")

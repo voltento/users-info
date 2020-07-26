@@ -17,6 +17,9 @@ func (d *dataBase) User(userId string) (*model.User, error) {
 
 	var users []*User
 	users, err = d.GetUsers(dtoModel)
+	if err != nil {
+		return nil, err
+	}
 
 	if len(users) == 0 {
 		return nil, errors.New(fmt.Sprintf("can not find any users by id = %v", userId))
