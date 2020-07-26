@@ -1,4 +1,4 @@
-package psql_service
+package storage
 
 type Config struct {
 	User     string

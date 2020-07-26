@@ -1,4 +1,4 @@
-package psql_service
+package storage
 
 import "github.com/go-pg/pg/orm"
 
