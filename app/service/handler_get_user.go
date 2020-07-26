@@ -15,7 +15,7 @@ func (s *Service) GetUser(ctx *gin.Context) {
 		return
 	}
 
-	user, err := s.storage.User(userParam.UserId)
+	user, err := s.storage.User(&userParam)
 	if err != nil {
 		err = errors.Wrap(err, "processing getUsers")
 		s.logger.Error(err.Error())

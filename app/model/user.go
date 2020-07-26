@@ -1,7 +1,7 @@
 package model
 
 type User struct {
-	UserId      string `uri:"userid" binding:"required"`
+	UserId      string `uri:"userid"`
 	FirstName   string
 	SecondName  string
 	Email       string

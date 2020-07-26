@@ -1,8 +1,9 @@
 package psql_service
 
 import (
-	"errors"
+	"fmt"
 	"github.com/go-pg/pg"
+	"github.com/pkg/errors"
 	"github.com/voltento/users-info/app/model"
 	"strconv"
 )
@@ -43,4 +44,22 @@ func dtoUserToModelUser(dtoUser *User) model.User {
 		Email:       dtoUser.Email,
 		CountryCode: dtoUser.CountryCode,
 	}
+}
+
+func modelUserToDtoUser(user *model.User) (*User, error) {
+	u := &User{
+		FirstName:   user.FirstName,
+		LastName:    user.SecondName,
+		Email:       user.Email,
+		CountryCode: user.CountryCode,
+	}
+
+	id, err := strconv.Atoi(user.UserId)
+	if err != nil {
+		return nil, errors.Wrap(err, fmt.Sprintf("can not convert userId '%v' to the dto user id", user.UserId))
+	}
+
+	u.UserId = id
+
+	return u, nil
 }
