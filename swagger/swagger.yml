@@ -1,0 +1,105 @@
+swagger: "2.0"
+info:
+  title: Users Info
+  description: Information about users
+  version: 1.0.0
+host: localhost
+schemes:
+  - http
+basePath: /v1
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /users/:
+    get:
+      summary: Get all users
+      operationId: GetUsers
+      responses:
+        200:
+          description: General information about users
+          schema:
+            $ref: '#/definitions/ArrayOfUsers'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /user/{userid}:
+    get:
+      summary: Get user by id
+      operationId: GetUserById
+      parameters:
+        - $ref: '#/parameters/userId'
+
+      responses:
+        200:
+          description: General information about user
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/Error'
+
+
+parameters:
+  userId:
+    name: orderId
+    in: path
+    description: User identificator
+    required: true
+    type: string
+
+definitions:
+  Error:
+    type: object
+    required:
+      - message
+      - code
+    description: Error message
+    properties:
+      message:
+        type: string
+      code:
+        type: integer
+
+  ArrayOfUsers:
+    type: array
+    items:
+      $ref: '#/definitions/User'
+
+  User:
+    type: object
+    required:
+      - id
+      - firstname
+      - secondname
+      - email
+      - countrycode
+    properties:
+      id:
+        type: string
+        description: User's identificator
+      firstname:
+        type: string
+        description: First name
+      secondname:
+        type: string
+        description: Second name
+      email:
+        type: string
+        description: Email
+      countrycode:
+        type: string
+        description: Country code

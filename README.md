@@ -5,6 +5,11 @@ App architecture
 - `make db-migrate` run migration
 - `make db-migrate-test` run migration for testing
 
+### API
+- Run swagger `make swagger-ui`
+- Open `http://localhost:8084/`
+- Explore  `./swagger.yml`
+
 ### Architecture 
 https://miro.com/app/board/o9J_ko_Lm30=/
 
