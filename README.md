@@ -15,24 +15,12 @@ https://miro.com/app/board/o9J_ko_Lm30=/
 
 - connectors
   - postgreSQl connector: get data, put data
-    - interface with dto
     - create user
-    - get user
-    - ger user by property
 Will use this https://github.com/go-pg/pg/blob/ee50368e25f8/base.go#L296
     
 - router
   - represents endpoints
     - post /create/user
-    - get /user/{user_id}
-    - get /users
-- app.go
-   - create router
-   - create connector
-   - create service
-   - connect a connecter to service
-   - connect a router with service
-- logger
 - health check
 
 ### TODO:
