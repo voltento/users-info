@@ -4,6 +4,8 @@ App architecture
 - `make db-run`- run database
 - `make db-migrate` run migration
 - `make db-migrate-test` run migration for testing
+- `make test` run tests
+- `make test-cover` show test cevarage
 
 ### API
 - Run swagger `make swagger-ui`

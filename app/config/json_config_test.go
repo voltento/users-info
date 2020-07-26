@@ -61,3 +61,14 @@ func TestNewConfigFromBytesService(t *testing.T) {
 	assert.Equal(t, service.Address, "mail:221", "service.address")
 	assert.Equal(t, service.LogGinGonic, true, "service.logGinGonic")
 }
+
+func TestNewConfigFromBytesInvaludJson(t *testing.T) {
+	cfgData := `
+{
+  "service": {
+}	
+`
+	_, err := NewConfigFromBytes([]byte(cfgData))
+	assert.Error(t, err)
+
+}

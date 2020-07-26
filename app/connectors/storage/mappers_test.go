@@ -103,3 +103,8 @@ func TestModelUserToDtoUserWrongUserId(t *testing.T) {
 	_, err := modelUserToDtoUser(modelUser)
 	assert.Error(t, err)
 }
+
+func TestConfigToPgOptionsEmpty(t *testing.T) {
+	_, err := configToPgOptions(nil)
+	assert.Error(t, err)
+}

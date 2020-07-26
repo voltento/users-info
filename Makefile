@@ -30,10 +30,11 @@ db-down:
 db-create:
 	 psql ${db_creds} -f ${migrations_path}/set-up.sql
 
+# test
 test:
 	go test -v ./...
 
-test_cover:
+test-cover:
 	go test -coverprofile=coverage.out -v ./... && \
     go tool cover -html=coverage.out
 
