@@ -18,19 +18,19 @@ https://miro.com/app/board/o9J_ko_Lm30=/
 - connectors
   - postgreSQl connector: get data, put data
     - create user
+    - drop user
 Will use this https://github.com/go-pg/pg/blob/ee50368e25f8/base.go#L296
     
 - router
   - represents endpoints
-    - post /create/user
+    - post /user
+    - delete /user 
 - health check
 
 ### TODO:
 - Pack app into docker
-- Add tests
 - Add logger into all
 - Integrate health check
-- Use swagger for documentation
 - notify mechanizm
 - add check if it's internal error or not
 - add limitations for getUsers enteties count
