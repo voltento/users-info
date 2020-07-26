@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/voltento/users-info/app/connectors/storage"
 	"go.uber.org/zap"
+	"net/http"
 	"time"
 )
 
@@ -56,6 +57,7 @@ func NewService(config *Config, logger *zap.SugaredLogger, storage storage.Stora
 }
 
 func (s *Service) Run() error {
+	s.logger.Infof("start listening at %v", s.config.Address)
 	er := s.engine.Run(s.config.Address)
 	s.Stop()
 	return er
@@ -64,6 +66,10 @@ func (s *Service) Run() error {
 func (s *Service) ConnectHandlers() {
 	s.engine.GET("/users", s.GetUsers)
 	s.engine.GET("/user/:user_id", s.GetUser)
+	s.engine.GET("/healthcheck", func(ctx *gin.Context) {
+		var i interface{}
+		ctx.JSON(http.StatusOK, i)
+	})
 }
 
 func (s *Service) Stop() {

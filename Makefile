@@ -1,3 +1,4 @@
+CWD=`pwd`
 
 # tools
 golint:
@@ -28,6 +29,13 @@ db-down:
 
 db-create:
 	 psql ${db_creds} -f ${migrations_path}/set-up.sql
+
+test:
+	go test -v ./...
+
+test_cover:
+	go test -coverprofile=coverage.out -v ./... && \
+    go tool cover -html=coverage.out
 
 
 

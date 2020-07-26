@@ -313,6 +313,7 @@ linters:
   disable:
     - maligned
     - prealloc
+    - noctx
   disable-all: false
   presets:
     - bugs
