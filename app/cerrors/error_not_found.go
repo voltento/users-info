@@ -1,4 +1,4 @@
-package ui_errors
+package cerrors
 
 type ErrorNotFond struct {
 	msg string

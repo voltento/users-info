@@ -6,10 +6,10 @@ import (
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
+	"github.com/voltento/users-info/app/cerrors"
 	"github.com/voltento/users-info/app/connectors/storage"
 	"github.com/voltento/users-info/app/logger"
 	"github.com/voltento/users-info/app/model"
-	"github.com/voltento/users-info/app/ui_errors"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -34,27 +34,27 @@ type ServiceTestSuite struct {
 
 func (suite *ServiceTestSuite) usersFunc(modelUser *model.User) ([]model.User, error) {
 	if len(suite.modelUserToUserData) == 0 {
-		return nil, ui_errors.NewErrorNotFound("no users")
+		return nil, cerrors.NewErrorNotFound("no users")
 	}
 	if v, isOk := suite.modelUserToUserData[*modelUser]; isOk {
 		return v, nil
 	}
-	return nil, ui_errors.NewErrorNotFound("no users")
+	return nil, cerrors.NewErrorNotFound("no users")
 }
 
 func (suite *ServiceTestSuite) userFunc(userId string) (*model.User, error) {
 	if len(userId) == 0 {
-		return nil, ui_errors.NewErrorBadRequest("empty user id")
+		return nil, cerrors.NewErrorBadRequest("empty user id")
 	}
 
 	if _, err := strconv.Atoi(userId); err != nil {
-		return nil, ui_errors.NewErrorBadRequest("empty user id")
+		return nil, cerrors.NewErrorBadRequest("empty user id")
 	}
 
 	if u, isOk := suite.userIdToUserData[userId]; isOk {
 		return u, nil
 	}
-	return nil, ui_errors.NewErrorNotFound(fmt.Sprintf("no user with id '%v'", userId))
+	return nil, cerrors.NewErrorNotFound(fmt.Sprintf("no user with id '%v'", userId))
 }
 
 func (suite *ServiceTestSuite) deleteUserFunc(userId string) error {

@@ -1,4 +1,4 @@
-package ui_errors
+package cerrors
 
 import (
 	"github.com/stretchr/testify/assert"
