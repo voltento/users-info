@@ -23,5 +23,5 @@ func (suite *ServiceTestSuite) TestService_GetUserNotFound() {
 	assert.NoError(suite.T(), err)
 	defer resp.Body.Close()
 
-	assert.Equal(suite.T(), resp.StatusCode, http.StatusBadRequest)
+	assert.Equal(suite.T(), http.StatusNoContent, resp.StatusCode)
 }

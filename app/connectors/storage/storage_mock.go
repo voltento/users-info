@@ -7,15 +7,21 @@ import (
 type (
 	UsersFunc func(*model.User) ([]model.User, error)
 	UserFunc  func(userId string) (*model.User, error)
+	DropUser  func(userId string) error
 )
 
 type StorageMock struct {
 	usersFunc UsersFunc
 	userFunc  UserFunc
+	dropUser  DropUser
 }
 
-func NewStorageMock(usersFunc UsersFunc, userFunc UserFunc) Storage {
-	return &StorageMock{usersFunc: usersFunc, userFunc: userFunc}
+func (s *StorageMock) DropUser(userId string) error {
+	return s.dropUser(userId)
+}
+
+func NewStorageMock(usersFunc UsersFunc, userFunc UserFunc, dropUser DropUser) Storage {
+	return &StorageMock{usersFunc: usersFunc, userFunc: userFunc, dropUser: dropUser}
 }
 
 func (s *StorageMock) Users(user *model.User) ([]model.User, error) {

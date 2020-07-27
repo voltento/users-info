@@ -9,8 +9,10 @@ import (
 	"github.com/voltento/users-info/app/connectors/storage"
 	"github.com/voltento/users-info/app/logger"
 	"github.com/voltento/users-info/app/model"
+	"github.com/voltento/users-info/app/ui_errors"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 	"sync"
 	"testing"
 	"time"
@@ -32,23 +34,40 @@ type ServiceTestSuite struct {
 
 func (suite *ServiceTestSuite) usersFunc(modelUser *model.User) ([]model.User, error) {
 	if len(suite.modelUserToUserData) == 0 {
-		return nil, errors.New("map is empty")
+		return nil, ui_errors.NewErrorNotFound("no users")
 	}
 	if v, isOk := suite.modelUserToUserData[*modelUser]; isOk {
 		return v, nil
 	}
-	return nil, errors.New("no users")
+	return nil, ui_errors.NewErrorNotFound("no users")
 }
 
 func (suite *ServiceTestSuite) userFunc(userId string) (*model.User, error) {
 	if len(userId) == 0 {
-		return nil, errors.New("received empty user id")
+		return nil, ui_errors.NewErrorBadRequest("empty user id")
+	}
+
+	if _, err := strconv.Atoi(userId); err != nil {
+		return nil, ui_errors.NewErrorBadRequest("empty user id")
 	}
 
 	if u, isOk := suite.userIdToUserData[userId]; isOk {
 		return u, nil
 	}
-	return nil, errors.New(fmt.Sprintf("no user with id '%v'", userId))
+	return nil, ui_errors.NewErrorNotFound(fmt.Sprintf("no user with id '%v'", userId))
+}
+
+func (suite *ServiceTestSuite) deleteUserFunc(userId string) error {
+	if len(userId) == 0 {
+		return errors.New("received empty user id")
+	}
+
+	if _, isOk := suite.userIdToUserData[userId]; !isOk {
+		return errors.New("user not found")
+	} else {
+		delete(suite.userIdToUserData, userId)
+		return nil
+	}
 }
 
 func (suite *ServiceTestSuite) TearDownTest() {
@@ -62,7 +81,7 @@ func (suite *ServiceTestSuite) SetupTest() {
 	}
 	suite.url = "http://" + config.Address
 
-	s := storage.NewStorageMock(suite.usersFunc, suite.userFunc)
+	s := storage.NewStorageMock(suite.usersFunc, suite.userFunc, suite.deleteUserFunc)
 
 	err, service := NewService(config, logger.NewMock().Sugar(), s)
 	if err != nil {
@@ -127,6 +146,7 @@ func (suite *ServiceTestSuite) checkUserFromHttpResponse(expect model.User, resp
 	assert.NoError(suite.T(), err)
 	assert.Equal(suite.T(), expect, user)
 }
+
 func usersToSet(users []model.User) map[model.User]struct{} {
 	result := make(map[model.User]struct{}, len(users))
 	for _, u := range users {

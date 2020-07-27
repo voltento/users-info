@@ -26,7 +26,7 @@ func (suite *ServiceTestSuite) TestService_GetUsersGetByUserIdNotFound() {
 	assert.NoError(suite.T(), err)
 	defer resp.Body.Close()
 
-	assert.Equal(suite.T(), resp.StatusCode, http.StatusBadRequest)
+	assert.Equal(suite.T(), http.StatusNoContent, resp.StatusCode)
 }
 
 func (suite *ServiceTestSuite) TestService_GetUsersGetByFirstNameOk() {
@@ -43,8 +43,7 @@ func (suite *ServiceTestSuite) TestService_GetUsersGetByFirstNameOk() {
 }
 
 func (suite *ServiceTestSuite) TestService_GetUsersGetByFirstNameTwoUsersOk() {
-	var testUser1Copy model.User
-	testUser1Copy = suite.testUser1
+	testUser1Copy := suite.testUser1
 	testUser1Copy.UserId = "2"
 	respUsers := []model.User{
 		suite.testUser1,

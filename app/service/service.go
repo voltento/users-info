@@ -66,6 +66,7 @@ func (s *Service) Run() error {
 func (s *Service) ConnectHandlers() {
 	s.engine.GET("/users", s.GetUsers)
 	s.engine.GET("/user/:user_id", s.GetUser)
+	s.engine.DELETE("/user/:user_id", s.DeleteUser)
 	s.engine.GET("/healthcheck", func(ctx *gin.Context) {
 		var i interface{}
 		ctx.JSON(http.StatusOK, i)

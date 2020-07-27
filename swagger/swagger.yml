@@ -15,7 +15,7 @@ produces:
 paths:
   /users/:
     get:
-      summary: Get all users
+      summary: Get users by params
       operationId: GetUsers
       parameters:
         - $ref: '#/parameters/user_id'
@@ -56,6 +56,27 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/Error'
+    delete:
+      summary: Delete user by id
+      operationId: Delete user by id
+      parameters:
+        - $ref: '#/parameters/user_id_in_path'
+      responses:
+        200:
+          description: User is deleted
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        204:
+          description: User not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/Error'
+
 
 
 parameters:
