@@ -107,17 +107,15 @@ func (suite *ServiceTestSuite) SetupTest() {
 	wg.Wait()
 }
 
-func (suite *ServiceTestSuite) checkUsersFromHttpResponse(expect model.User, resp *http.Response) {
+func (suite *ServiceTestSuite) checkUsersFromHttpResponse(expect []model.User, resp *http.Response) {
 	data, err := ioutil.ReadAll(resp.Body)
 	assert.NoError(suite.T(), err)
 	var user []model.User
 	err = json.Unmarshal(data, &user)
 
 	assert.NoError(suite.T(), err)
-	assert.Equal(suite.T(), 1, len(user))
-	if len(user) > 0 {
-		assert.Equal(suite.T(), expect, user[0])
-	}
+	assert.Equal(suite.T(), len(expect), len(user))
+	assert.Equal(suite.T(), usersToSet(expect), usersToSet(user))
 }
 
 func (suite *ServiceTestSuite) checkUserFromHttpResponse(expect model.User, resp *http.Response) {
@@ -128,4 +126,14 @@ func (suite *ServiceTestSuite) checkUserFromHttpResponse(expect model.User, resp
 
 	assert.NoError(suite.T(), err)
 	assert.Equal(suite.T(), expect, user)
+}
+func usersToSet(users []model.User) map[model.User]struct{} {
+	result := make(map[model.User]struct{}, len(users))
+	for _, u := range users {
+		if _, hasVal := result[u]; hasVal {
+			panic(fmt.Sprintf("usersToSet: get duplicate values: %v", u))
+		}
+		result[u] = struct{}{}
+	}
+	return result
 }

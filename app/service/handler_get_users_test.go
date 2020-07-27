@@ -16,7 +16,7 @@ func (suite *ServiceTestSuite) TestService_GetUsersGetByUserIdOk() {
 
 	assert.NoError(suite.T(), err)
 	assert.Equal(suite.T(), resp.StatusCode, http.StatusOK)
-	suite.checkUsersFromHttpResponse(suite.testUser1, resp)
+	suite.checkUsersFromHttpResponse([]model.User{suite.testUser1}, resp)
 }
 
 func (suite *ServiceTestSuite) TestService_GetUsersGetByUserIdNotFound() {
@@ -39,7 +39,24 @@ func (suite *ServiceTestSuite) TestService_GetUsersGetByFirstNameOk() {
 
 	assert.NoError(suite.T(), err)
 	assert.Equal(suite.T(), resp.StatusCode, http.StatusOK)
-	suite.checkUsersFromHttpResponse(suite.testUser1, resp)
+	suite.checkUsersFromHttpResponse([]model.User{suite.testUser1}, resp)
+}
+
+func (suite *ServiceTestSuite) TestService_GetUsersGetByFirstNameTwoUsersOk() {
+	var testUser1Copy model.User
+	testUser1Copy = suite.testUser1
+	testUser1Copy.UserId = "2"
+	respUsers := []model.User{
+		suite.testUser1,
+		testUser1Copy,
+	}
+	suite.modelUserToUserData[model.User{FirstName: "aa"}] = respUsers
+	query := suite.url + "/users?first_name=aa"
+	resp, err := http.Get(query)
+
+	assert.NoError(suite.T(), err)
+	assert.Equal(suite.T(), resp.StatusCode, http.StatusOK)
+	suite.checkUsersFromHttpResponse(respUsers, resp)
 }
 
 func (suite *ServiceTestSuite) TestService_GetUsersGetBySecondNameOk() {
@@ -54,7 +71,7 @@ func (suite *ServiceTestSuite) TestService_GetUsersGetBySecondNameOk() {
 	defer resp.Body.Close()
 
 	assert.Equal(suite.T(), resp.StatusCode, http.StatusOK)
-	suite.checkUsersFromHttpResponse(suite.testUser1, resp)
+	suite.checkUsersFromHttpResponse([]model.User{suite.testUser1}, resp)
 }
 
 func (suite *ServiceTestSuite) TestService_GetUsersGetByEmailOk() {
@@ -69,7 +86,7 @@ func (suite *ServiceTestSuite) TestService_GetUsersGetByEmailOk() {
 	defer resp.Body.Close()
 
 	assert.Equal(suite.T(), resp.StatusCode, http.StatusOK)
-	suite.checkUsersFromHttpResponse(suite.testUser1, resp)
+	suite.checkUsersFromHttpResponse([]model.User{suite.testUser1}, resp)
 }
 
 func (suite *ServiceTestSuite) TestService_GetUsersGetByCountryOk() {
@@ -84,5 +101,5 @@ func (suite *ServiceTestSuite) TestService_GetUsersGetByCountryOk() {
 	defer resp.Body.Close()
 
 	assert.Equal(suite.T(), resp.StatusCode, http.StatusOK)
-	suite.checkUsersFromHttpResponse(suite.testUser1, resp)
+	suite.checkUsersFromHttpResponse([]model.User{suite.testUser1}, resp)
 }
