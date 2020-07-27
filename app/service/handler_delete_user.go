@@ -8,10 +8,10 @@ import (
 func (s *Service) DeleteUser(ctx *gin.Context) {
 	id := ctx.Param("user_id")
 
-	user, err := s.storage.User(id)
+	err := s.storage.DropUser(id)
 	if err != nil {
 		putErrToCtx(err, ctx)
 		return
 	}
-	ctx.JSON(http.StatusOK, user)
+	ctx.Status(http.StatusOK)
 }

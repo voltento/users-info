@@ -16,10 +16,6 @@ type dataBase struct {
 	logger *zap.Logger
 }
 
-func (d *dataBase) DropUser(userId string) error {
-	panic("implement me")
-}
-
 func NewPsqlStorage(cfg *Config, logger *zap.Logger) (Storage, error) {
 	opts, err := configToPgOptions(cfg)
 	if err != nil {

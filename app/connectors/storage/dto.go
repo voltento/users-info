@@ -1,7 +1,7 @@
 package storage
 
 type User struct {
-	UserId      int
+	UserId      int `sql:",pk"`
 	FirstName   string
 	LastName    string
 	Email       string
