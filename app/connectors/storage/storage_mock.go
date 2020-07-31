@@ -19,7 +19,7 @@ type StorageMock struct {
 }
 
 func (s *StorageMock) UpdateUser(user *model.User) error {
-	return s.UpdateUser(user)
+	return s.updateUserFunc(user)
 }
 
 func (s *StorageMock) DropUser(userId string) error {

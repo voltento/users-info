@@ -73,7 +73,17 @@ func (suite *ServiceTestSuite) deleteUserFunc(userId string) error {
 	}
 }
 
-func (suite *ServiceTestSuite) updateUserFunc(modelUser *model.User) error {
+func (suite *ServiceTestSuite) updateUserFunc(u *model.User) error {
+	isBadRequest := false
+	isBadRequest = isBadRequest || len(u.FirstName) == 0
+	isBadRequest = isBadRequest || len(u.LastName) == 0
+	isBadRequest = isBadRequest || len(u.Email) == 0
+	isBadRequest = isBadRequest || len(u.CountryCode) == 0
+
+	if isBadRequest {
+		return fault.NewBadRequest("bad request")
+	}
+
 	return nil
 }
 
