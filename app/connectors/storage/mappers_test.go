@@ -63,7 +63,7 @@ func TestDtoUserToModelUser(t *testing.T) {
 	modelUser := dtoUserToModelUser(dtoUser)
 	assert.Equal(t, modelUser.UserId, "1")
 	assert.Equal(t, modelUser.FirstName, dtoUser.FirstName)
-	assert.Equal(t, modelUser.SecondName, dtoUser.LastName)
+	assert.Equal(t, modelUser.LastName, dtoUser.LastName)
 	assert.Equal(t, modelUser.Email, dtoUser.Email)
 	assert.Equal(t, modelUser.CountryCode, dtoUser.CountryCode)
 }
@@ -72,7 +72,7 @@ func TestModelUserToDtoUserOk(t *testing.T) {
 	modelUser := &model.User{
 		UserId:      "2",
 		FirstName:   "test_firstname",
-		SecondName:  "test_secondname",
+		LastName:    "test_LastName",
 		Email:       "test_email",
 		CountryCode: "test_countrycode",
 	}
@@ -82,7 +82,7 @@ func TestModelUserToDtoUserOk(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, dtoUser.UserId, 2)
 	assert.Equal(t, dtoUser.FirstName, modelUser.FirstName)
-	assert.Equal(t, dtoUser.LastName, modelUser.SecondName)
+	assert.Equal(t, dtoUser.LastName, modelUser.LastName)
 	assert.Equal(t, dtoUser.Email, modelUser.Email)
 	assert.Equal(t, dtoUser.CountryCode, modelUser.CountryCode)
 }

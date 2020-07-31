@@ -20,6 +20,7 @@ func NewLogger(cfg *Config) (*zap.Logger, error) {
 	if len(cfg.ErrorOutputPath) > 0 {
 		zapCfg.ErrorOutputPaths = []string{cfg.ErrorOutputPath}
 	}
+
 	if len(cfg.Level) > 0 {
 		switch strings.ToLower(cfg.Level) {
 		case "debug":
@@ -32,5 +33,8 @@ func NewLogger(cfg *Config) (*zap.Logger, error) {
 			zapCfg.Level.SetLevel(zap.ErrorLevel)
 		}
 	}
+
+	zapCfg.Encoding = "console"
+
 	return zapCfg.Build()
 }

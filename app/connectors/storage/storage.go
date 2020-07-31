@@ -13,10 +13,10 @@ const (
 
 type dataBase struct {
 	db     *pg.DB
-	logger *zap.Logger
+	logger *zap.SugaredLogger
 }
 
-func NewPsqlStorage(cfg *Config, logger *zap.Logger) (Storage, error) {
+func NewPsqlStorage(cfg *Config, logger *zap.SugaredLogger) (Storage, error) {
 	opts, err := configToPgOptions(cfg)
 	if err != nil {
 		return nil, errors.Wrap(err, "can not create database")
@@ -26,6 +26,8 @@ func NewPsqlStorage(cfg *Config, logger *zap.Logger) (Storage, error) {
 		db:     pg.Connect(opts),
 		logger: logger.Named("psqlstorage"),
 	}
+
+	d.logDbConnection()
 
 	err = d.HealthCheck()
 	if err != nil {
@@ -43,4 +45,9 @@ func (d *dataBase) HealthCheck() error {
 
 func (d *dataBase) Stop() error {
 	return d.db.Close()
+}
+
+func (d *dataBase) logDbConnection() {
+	opts := d.db.Options()
+	d.logger.Infof("db configuration: address '%v' user '%v'", opts.Addr, opts.User)
 }

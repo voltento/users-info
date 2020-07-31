@@ -6,5 +6,6 @@ type Storage interface {
 	Users(user *model.User) ([]model.User, error)
 	User(userId string) (*model.User, error)
 	DropUser(userId string) error
+	UpdateUser(user *model.User) error
 	Stop() error
 }

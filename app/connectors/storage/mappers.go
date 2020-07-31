@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"github.com/go-pg/pg"
 	"github.com/pkg/errors"
+	"github.com/voltento/users-info/app/fault"
 	"github.com/voltento/users-info/app/model"
 	"strconv"
+	"strings"
 )
 
 func configToPgOptions(cfg *Config) (*pg.Options, error) {
@@ -17,6 +19,10 @@ func configToPgOptions(cfg *Config) (*pg.Options, error) {
 		User:     cfg.User,
 		Password: cfg.Password,
 		Database: cfg.Database,
+	}
+
+	if len(cfg.Addr) != 0 {
+		opts.Addr = cfg.Addr
 	}
 
 	if len(opts.User) == 0 {
@@ -38,7 +44,7 @@ func dtoUserToModelUser(dtoUser *User) model.User {
 	return model.User{
 		UserId:      strconv.Itoa(dtoUser.UserId),
 		FirstName:   dtoUser.FirstName,
-		SecondName:  dtoUser.LastName,
+		LastName:    dtoUser.LastName,
 		Email:       dtoUser.Email,
 		CountryCode: dtoUser.CountryCode,
 	}
@@ -47,7 +53,7 @@ func dtoUserToModelUser(dtoUser *User) model.User {
 func modelUserToDtoUser(user *model.User) (*User, error) {
 	u := &User{
 		FirstName:   user.FirstName,
-		LastName:    user.SecondName,
+		LastName:    user.LastName,
 		Email:       user.Email,
 		CountryCode: user.CountryCode,
 	}
@@ -55,11 +61,23 @@ func modelUserToDtoUser(user *model.User) (*User, error) {
 	if len(user.UserId) > 0 {
 		id, err := strconv.Atoi(user.UserId)
 		if err != nil {
-			return nil, errors.Wrap(err, fmt.Sprintf("can not convert userId '%v' to the dto user id", user.UserId))
+			err = errors.Wrap(err, fmt.Sprintf("can not convert userId '%v' to the dto user id", user.UserId))
+			return nil, fault.NewBadRequest(err.Error())
 		}
 
 		u.UserId = id
 	}
 
 	return u, nil
+}
+
+func sqlErrorToError(err error) error {
+	if strings.Contains(err.Error(), "violates not-null constraint") {
+		return fault.NewBadRequest(err.Error())
+	}
+
+	if strings.Contains(err.Error(), "duplicate key value violates") {
+		return fault.NewBadRequest(err.Error())
+	}
+	return err
 }

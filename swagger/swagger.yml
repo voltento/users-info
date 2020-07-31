@@ -20,7 +20,7 @@ paths:
       parameters:
         - $ref: '#/parameters/user_id'
         - $ref: '#/parameters/first_name'
-        - $ref: '#/parameters/second_name'
+        - $ref: '#/parameters/last_name'
         - $ref: '#/parameters/email'
         - $ref: '#/parameters/country_code'
       responses:
@@ -43,6 +43,28 @@ paths:
       operationId: GetUserById
       parameters:
         - $ref: '#/parameters/user_id_in_path'
+      responses:
+        200:
+          description: General information about user
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Get user by id
+      operationId: GetUserById
+      parameters:
+        - $ref: '#/parameters/user_id_in_path'
+        - $ref: '#/parameters/first_name'
+        - $ref: '#/parameters/last_name'
+        - $ref: '#/parameters/email'
+        - $ref: '#/parameters/country_code'
       responses:
         200:
           description: General information about user
@@ -99,10 +121,10 @@ parameters:
     description: User first_name
     type: string
 
-  second_name:
-    name: second_name
+  last_name:
+    name: last_name
     in: query
-    description: User second_name
+    description: User last_name
     type: string
 
 
@@ -141,7 +163,7 @@ definitions:
     required:
       - id
       - firstname
-      - secondname
+      - LastName
       - email
       - countrycode
     properties:
@@ -151,7 +173,7 @@ definitions:
       firstname:
         type: string
         description: First name
-      secondname:
+      LastName:
         type: string
         description: Second name
       email:

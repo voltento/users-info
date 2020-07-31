@@ -15,9 +15,9 @@ func (d *dataBase) Users(modelUser *model.User) ([]model.User, error) {
 	dtoUsers, err := d.GetUsers(dtoModel)
 	if err != nil {
 		d.logger.Error("failed")
-		return nil, errors.Wrap(err, "cant get users")
+		return nil, sqlErrorToError(errors.Wrap(err, "cant get users"))
 	}
-	d.logger.Sugar().Debugf("get %v users from database", len(dtoUsers))
+	d.logger.Debugf("get %v users from database", len(dtoUsers))
 	users := make([]model.User, 0, len(dtoUsers))
 	for _, u := range dtoUsers {
 		users = append(users, dtoUserToModelUser(u))

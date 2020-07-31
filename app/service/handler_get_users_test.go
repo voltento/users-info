@@ -58,12 +58,12 @@ func (suite *ServiceTestSuite) TestService_GetUsersGetByFirstNameTwoUsersOk() {
 	suite.checkUsersFromHttpResponse(respUsers, resp)
 }
 
-func (suite *ServiceTestSuite) TestService_GetUsersGetBySecondNameOk() {
-	suite.modelUserToUserData[model.User{SecondName: "second_name"}] = []model.User{
+func (suite *ServiceTestSuite) TestService_GetUsersGetByLastNameOk() {
+	suite.modelUserToUserData[model.User{LastName: "last_name"}] = []model.User{
 		suite.testUser1,
 	}
 
-	query := suite.url + "/users?second_name=second_name"
+	query := suite.url + "/users?last_name=last_name"
 	resp, err := http.Get(query)
 
 	assert.NoError(suite.T(), err)

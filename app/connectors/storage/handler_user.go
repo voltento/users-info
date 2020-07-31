@@ -18,7 +18,7 @@ func (d *dataBase) User(userId string) (*model.User, error) {
 	var users []*User
 	users, err = d.GetUsers(dtoModel)
 	if err != nil {
-		return nil, err
+		return nil, sqlErrorToError(err)
 	}
 
 	if len(users) == 0 {

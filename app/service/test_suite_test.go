@@ -98,14 +98,14 @@ func (suite *ServiceTestSuite) SetupTest() {
 	suite.testUser1 = model.User{
 		UserId:      "1",
 		FirstName:   "testUser1_firstname",
-		SecondName:  "testUser1_secondname",
+		LastName:    "testUser1_LastName",
 		Email:       "testUser1_email",
 		CountryCode: "testUser1_countrycode",
 	}
 	suite.testUser2 = model.User{
 		UserId:      "2",
 		FirstName:   "testUser2_firstname",
-		SecondName:  "testUser2_secondname",
+		LastName:    "testUser2_LastName",
 		Email:       "testUser2_email",
 		CountryCode: "testUser2_countrycode",
 	}

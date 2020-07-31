@@ -67,6 +67,7 @@ func (s *Service) ConnectHandlers() {
 	s.engine.GET("/users", s.GetUsers)
 	s.engine.GET("/user/:user_id", s.GetUser)
 	s.engine.DELETE("/user/:user_id", s.DeleteUser)
+	s.engine.PUT("/user/:user_id", s.PutUser)
 	s.engine.GET("/healthcheck", func(ctx *gin.Context) {
 		var i interface{}
 		ctx.JSON(http.StatusOK, i)

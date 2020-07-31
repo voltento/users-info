@@ -18,7 +18,7 @@ func (d *dataBase) DropUser(userId string) error {
 
 	r, err := d.db.Model(ormUser).Table(tableNameUsersInfo).WherePK().Delete()
 	if err != nil {
-		return errors.Wrap(err, "query processing error")
+		return sqlErrorToError(errors.Wrap(err, "query processing error"))
 	}
 
 	if r.RowsAffected() == 0 {

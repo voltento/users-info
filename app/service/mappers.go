@@ -11,7 +11,7 @@ func ctxToUser(ctx *gin.Context) *model.User {
 	return &model.User{
 		UserId:      ctx.DefaultQuery("user_id", ""),
 		FirstName:   ctx.DefaultQuery("first_name", ""),
-		SecondName:  ctx.DefaultQuery("second_name", ""),
+		LastName:    ctx.DefaultQuery("last_name", ""),
 		Email:       ctx.DefaultQuery("email", ""),
 		CountryCode: ctx.DefaultQuery("country_code", ""),
 	}

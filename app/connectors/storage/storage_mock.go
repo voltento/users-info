@@ -16,6 +16,10 @@ type StorageMock struct {
 	dropUser  DropUser
 }
 
+func (s *StorageMock) UpdateUser(user *model.User) error {
+	panic("implement me")
+}
+
 func (s *StorageMock) DropUser(userId string) error {
 	return s.dropUser(userId)
 }
