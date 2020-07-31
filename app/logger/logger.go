@@ -2,6 +2,7 @@ package logger
 
 import (
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 	"strings"
 )
 
@@ -35,6 +36,7 @@ func NewLogger(cfg *Config) (*zap.Logger, error) {
 	}
 
 	zapCfg.Encoding = "console"
+	zapCfg.EncoderConfig.EncodeTime = zapcore.RFC3339TimeEncoder
 
 	return zapCfg.Build()
 }
