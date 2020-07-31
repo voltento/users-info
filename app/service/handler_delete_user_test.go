@@ -33,7 +33,7 @@ func (suite *ServiceTestSuite) TestService_DeleteUserNotDeletedOk() {
 	assert.Equal(suite.T(), http.StatusNoContent, httpDelete(path))
 }
 
-func (suite *ServiceTestSuite) TestService_DeleteUserBadReques() {
+func (suite *ServiceTestSuite) TestService_DeleteUserBadRequest() {
 	path := suite.url + "/user/a"
 	assert.Equal(suite.T(), http.StatusBadRequest, httpDelete(path))
 }

@@ -3,7 +3,6 @@ package service
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"github.com/voltento/users-info/app/connectors/storage"
@@ -59,11 +58,15 @@ func (suite *ServiceTestSuite) userFunc(userId string) (*model.User, error) {
 
 func (suite *ServiceTestSuite) deleteUserFunc(userId string) error {
 	if len(userId) == 0 {
-		return errors.New("received empty user id")
+		return fault.NewBadRequest("received empty user id")
+	}
+
+	if _, err := strconv.Atoi(userId); err != nil {
+		return fault.NewBadRequest("received invalud user id")
 	}
 
 	if _, isOk := suite.userIdToUserData[userId]; !isOk {
-		return errors.New("user not found")
+		return fault.NewNotFound("user not found")
 	} else {
 		delete(suite.userIdToUserData, userId)
 		return nil
