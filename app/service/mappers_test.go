@@ -3,7 +3,7 @@ package service
 import (
 	"errors"
 	"github.com/stretchr/testify/assert"
-	"github.com/voltento/users-info/app/cerrors"
+	"github.com/voltento/users-info/app/fault"
 	"net/http"
 	"testing"
 )
@@ -13,11 +13,11 @@ func Test_errToStatusCodeOk(t *testing.T) {
 }
 
 func Test_errToStatusCodeNoContent(t *testing.T) {
-	assert.Equal(t, errToStatusCode(cerrors.NewErrorNotFound("")), http.StatusNoContent)
+	assert.Equal(t, errToStatusCode(fault.NewNotFound("")), http.StatusNoContent)
 }
 
 func Test_errToStatusCodeBadRequest(t *testing.T) {
-	assert.Equal(t, errToStatusCode(cerrors.NewErrorBadRequest("")), http.StatusBadRequest)
+	assert.Equal(t, errToStatusCode(fault.NewBadRequest("")), http.StatusBadRequest)
 }
 
 func Test_errToStatusCodeBadRequestUnknownError(t *testing.T) {

@@ -1,4 +1,4 @@
-package cerrors
+package fault
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -7,12 +7,12 @@ import (
 
 func TestNewErrorNotFound(t *testing.T) {
 	msg := "test_error_msg"
-	err := NewErrorNotFound(msg)
+	err := NewNotFound(msg)
 
 	assert.NotEqual(t, nil, err)
 	if err != nil {
 		assert.Equal(t, msg, err.Error())
 	}
-	convErr, isOk := err.(*ErrorNotFond)
+	convErr, isOk := err.(*NotFond)
 	assert.True(t, isOk, convErr)
 }

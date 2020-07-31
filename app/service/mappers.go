@@ -2,7 +2,7 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/voltento/users-info/app/cerrors"
+	"github.com/voltento/users-info/app/fault"
 	"github.com/voltento/users-info/app/model"
 	"net/http"
 )
@@ -30,9 +30,9 @@ func errToStatusCode(err error) int {
 	switch err.(type) {
 	case nil:
 		return http.StatusOK
-	case *cerrors.ErrorNotFond:
+	case *fault.NotFond:
 		return http.StatusNoContent
-	case *cerrors.ErrorBadRequest:
+	case *fault.BadRequest:
 		return http.StatusBadRequest
 	default:
 		return http.StatusInternalServerError

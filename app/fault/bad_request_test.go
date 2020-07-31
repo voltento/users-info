@@ -1,4 +1,4 @@
-package cerrors
+package fault
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -7,12 +7,12 @@ import (
 
 func TestNewErrorBadRequest(t *testing.T) {
 	msg := "test_error_msg"
-	err := NewErrorBadRequest(msg)
+	err := NewBadRequest(msg)
 
 	assert.NotEqual(t, nil, err)
 	if err != nil {
 		assert.Equal(t, msg, err.Error())
 	}
-	convErr, isOk := err.(*ErrorBadRequest)
+	convErr, isOk := err.(*BadRequest)
 	assert.True(t, isOk, convErr)
 }

@@ -3,7 +3,7 @@ package storage
 import (
 	"fmt"
 	"github.com/pkg/errors"
-	"github.com/voltento/users-info/app/cerrors"
+	"github.com/voltento/users-info/app/fault"
 	"github.com/voltento/users-info/app/model"
 )
 
@@ -22,7 +22,7 @@ func (d *dataBase) DropUser(userId string) error {
 	}
 
 	if r.RowsAffected() == 0 {
-		return cerrors.NewErrorNotFound(fmt.Sprintf("can not find any user by id %v", userId))
+		return fault.NewNotFound(fmt.Sprintf("can not find any user by id %v", userId))
 	}
 
 	return nil
