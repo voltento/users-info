@@ -73,6 +73,10 @@ func (suite *ServiceTestSuite) deleteUserFunc(userId string) error {
 	}
 }
 
+func (suite *ServiceTestSuite) updateUserFunc(modelUser *model.User) error {
+	return nil
+}
+
 func (suite *ServiceTestSuite) TearDownTest() {
 	suite.service.Stop()
 }
@@ -84,7 +88,7 @@ func (suite *ServiceTestSuite) SetupTest() {
 	}
 	suite.url = "http://" + config.Address
 
-	s := storage.NewStorageMock(suite.usersFunc, suite.userFunc, suite.deleteUserFunc)
+	s := storage.NewStorageMock(suite.usersFunc, suite.userFunc, suite.deleteUserFunc, suite.updateUserFunc)
 
 	err, service := NewService(config, logger.NewMock().Sugar(), s)
 	if err != nil {
