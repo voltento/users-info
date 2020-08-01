@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/voltento/users-info/app/connectors/storage"
 	"go.uber.org/zap"
-	"net/http"
 	"time"
 )
 
@@ -68,10 +67,8 @@ func (s *Service) ConnectHandlers() {
 	s.engine.GET("/user/:user_id", s.GetUser)
 	s.engine.DELETE("/user/:user_id", s.DeleteUser)
 	s.engine.PUT("/user/:user_id", s.PutUser)
-	s.engine.GET("/healthcheck", func(ctx *gin.Context) {
-		var i interface{}
-		ctx.JSON(http.StatusOK, i)
-	})
+
+	s.engine.GET("/healthcheck", s.buildGetHealthCheck())
 }
 
 func (s *Service) Stop() {

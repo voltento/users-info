@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"context"
 	"github.com/voltento/users-info/app/model"
 )
 
@@ -16,6 +17,10 @@ type StorageMock struct {
 	userFunc       UserFunc
 	dropUserFunc   DropUser
 	updateUserFunc UpdateUser
+}
+
+func (s *StorageMock) Check(ctx context.Context) error {
+	return nil
 }
 
 func (s *StorageMock) UpdateUser(user *model.User) error {

@@ -1,6 +1,9 @@
 package storage
 
-import "github.com/voltento/users-info/app/model"
+import (
+	"context"
+	"github.com/voltento/users-info/app/model"
+)
 
 type Storage interface {
 	Users(user *model.User) ([]model.User, error)
@@ -8,4 +11,5 @@ type Storage interface {
 	DropUser(userId string) error
 	UpdateUser(user *model.User) error
 	Stop() error
+	Check(ctx context.Context) error
 }

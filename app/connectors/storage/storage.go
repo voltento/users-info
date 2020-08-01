@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"context"
 	"github.com/go-pg/pg"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
@@ -14,6 +15,10 @@ const (
 type dataBase struct {
 	db     *pg.DB
 	logger *zap.SugaredLogger
+}
+
+func (d *dataBase) Check(_ context.Context) error {
+	return d.HealthCheck()
 }
 
 func NewPsqlStorage(cfg *Config, logger *zap.SugaredLogger) (Storage, error) {

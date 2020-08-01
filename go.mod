@@ -3,6 +3,7 @@ module github.com/voltento/users-info
 go 1.14
 
 require (
+	github.com/etherlabsio/healthcheck v0.0.0-20191224061800-dd3d2fd8c3f6
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-pg/pg v8.0.7+incompatible
 	github.com/jinzhu/inflection v1.0.0 // indirect
