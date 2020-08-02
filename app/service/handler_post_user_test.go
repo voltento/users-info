@@ -67,3 +67,8 @@ func (suite *ServiceTestSuite) TestService_PostUserDuplicateEmail() {
 	}
 	assert.Equal(suite.T(), http.StatusBadRequest, httpPost(path, user))
 }
+
+func (suite *ServiceTestSuite) TestService_PostUserInvalidData() {
+	path := suite.url + "/user/"
+	assert.Equal(suite.T(), http.StatusBadRequest, httpPost(path, []string{}))
+}

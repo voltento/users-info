@@ -11,6 +11,7 @@ func TestConfigToPgOptionsOk(t *testing.T) {
 		User:     "test_user",
 		Password: "test_password",
 		Database: "test_database",
+		Addr:     "local_host:8080",
 	}
 
 	pgOptions, err := configToPgOptions(cfg)
@@ -19,6 +20,7 @@ func TestConfigToPgOptionsOk(t *testing.T) {
 	assert.Equal(t, cfg.User, pgOptions.User)
 	assert.Equal(t, cfg.Password, pgOptions.Password)
 	assert.Equal(t, cfg.Database, pgOptions.Database)
+	assert.Equal(t, cfg.Addr, pgOptions.Addr)
 }
 
 func TestConfigToPgOptionsNoUser(t *testing.T) {
