@@ -1,0 +1,15 @@
+{
+  "database": {
+    "user": "users-info",
+    "password": "users-info",
+    "database": "users-info",
+    "addr": "postgres:5432"
+  },
+  "logger": {
+    "level": "info"
+  },
+  "service": {
+    "address": "0.0.0.0:8181",
+    "log_gin_gonic": false
+  }
+}

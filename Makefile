@@ -1,17 +1,26 @@
 CWD=`pwd`
 
+
+# app
+
+app-run: db-run
+	docker-compose -f ci/docker-compose.yml up app
+
 # tools
 golint:
 	 golangci-lint run
 
 swagger-ui:
-	docker-compose -f ci/docker-compose-tools.yml up -d swaggerui
+	docker-compose -f ci/docker-compose.yml up -d swaggerui
 
 # db
 migrations_path="migrations"
 db_creds="host=localhost port=5432 dbname=users-info user=users-info password=users-info"
 
-db-run: db-up
+db-run: db-up db-create
+
+db-down:
+	docker-compose -f ci/docker-compose.yml down  || exit 1
 
 db-connect:
 	 psql ${db_creds}
@@ -22,13 +31,13 @@ db-migrate-test: db-create
 	 psql ${db_creds} -f ${migrations_path}/add-test-data.sql
 
 db-up: db-down
-	docker-compose -f ci/docker-compose-run-app.yml up -d
+	docker-compose -f ci/docker-compose.yml up -d postgres
 
-db-down:
-	docker-compose -f ci/docker-compose-run-app.yml down
-
-db-create:
+db-create: db-ready
 	 psql ${db_creds} -f ${migrations_path}/set-up.sql
+
+db-ready:
+	docker-compose -f ci/docker-compose.yml up start_dependencies
 
 # test
 test:
