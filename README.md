@@ -17,7 +17,6 @@ One command start:
 ### TODO:
 - notify mechanism
 - Add logger into all
-- add limitations for getUsers entities count
 
 
 ### Assemptations

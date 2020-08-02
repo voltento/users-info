@@ -31,7 +31,7 @@ func (d *dataBase) GetUsers(ormUser *User) ([]*User, error) {
 
 func (d *dataBase) GetUsersWithCtx(ormUser *User, ctx context.Context) ([]*User, error) {
 	var users []*User
-	q := d.db.WithContext(ctx).Model().Table(tableNameUsersInfo)
+	q := d.db.WithContext(ctx).Model().Table(tableNameUsersInfo).Limit(d.cfg.LimitGetEntities)
 	q = buildUserWhereEqual(ormUser, q)
 	err := q.Select(&users)
 

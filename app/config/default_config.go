@@ -9,9 +9,10 @@ import (
 
 func NewDefaultConfig() *Config {
 	dbConfig := &db.Config{
-		User:     "users-info",
-		Password: "users-info",
-		Database: "users-info",
+		User:             "users-info",
+		Password:         "users-info",
+		Database:         "users-info",
+		LimitGetEntities: 500,
 	}
 	loggerConfig := &logger.Config{
 		Level: "debug",

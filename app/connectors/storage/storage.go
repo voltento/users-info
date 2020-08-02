@@ -15,6 +15,7 @@ const (
 type dataBase struct {
 	db     *pg.DB
 	logger *zap.SugaredLogger
+	cfg    *Config
 }
 
 func NewPsqlStorage(cfg *Config, logger *zap.SugaredLogger) (Storage, error) {
@@ -26,6 +27,7 @@ func NewPsqlStorage(cfg *Config, logger *zap.SugaredLogger) (Storage, error) {
 	d := &dataBase{
 		db:     pg.Connect(opts),
 		logger: logger.Named("psqlstorage"),
+		cfg:    cfg,
 	}
 
 	d.logDbConnection()
