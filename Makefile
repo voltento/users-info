@@ -2,10 +2,10 @@ CWD=`pwd`
 
 # app
 
-app-run: db-run
+app-run-docker: db-run
 	docker-compose -f ci/docker-compose.yml up app
 
-app-run-localy: db-run app-build-localy
+app-run: db-run app-build-localy
 	./users-info --config config/config.json
 
 app-build-localy:
