@@ -1,10 +1,15 @@
 CWD=`pwd`
 
-
 # app
 
 app-run: db-run
 	docker-compose -f ci/docker-compose.yml up app
+
+app-run-localy: db-run app-build-localy
+	./users-info --config config/config.json
+
+app-build-localy:
+	go build -o users-info app/app.go
 
 # tools
 golint:
@@ -30,7 +35,7 @@ db-migrate: db-create
 db-migrate-test: db-create
 	 psql ${db_creds} -f ${migrations_path}/add-test-data.sql
 
-db-up: db-down
+db-up:
 	docker-compose -f ci/docker-compose.yml up -d postgres
 
 db-create: db-ready
