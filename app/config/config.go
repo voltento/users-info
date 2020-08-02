@@ -2,7 +2,7 @@ package config
 
 import (
 	"flag"
-	db "github.com/voltento/users-info/app/connectors/storage"
+	db "github.com/voltento/users-info/app/connectors/database"
 	"github.com/voltento/users-info/app/logger"
 	"github.com/voltento/users-info/app/service"
 	"log"

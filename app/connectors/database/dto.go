@@ -1,4 +1,4 @@
-package storage
+package database
 
 type User struct {
 	UserId      int `sql:",pk"`

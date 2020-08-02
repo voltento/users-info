@@ -2,19 +2,19 @@ package service
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/voltento/users-info/app/connectors/storage"
+	"github.com/voltento/users-info/app/connectors/database"
 	"go.uber.org/zap"
 	"time"
 )
 
 type Service struct {
-	storage storage.Storage
+	storage database.Storage
 	config  *Config
 	engine  *gin.Engine
 	logger  *zap.SugaredLogger
 }
 
-func NewService(config *Config, logger *zap.SugaredLogger, storage storage.Storage) (error, *Service) {
+func NewService(config *Config, logger *zap.SugaredLogger, storage database.Storage) (error, *Service) {
 	var engine *gin.Engine
 	if !config.LogGinGonic {
 		engine = gin.New()

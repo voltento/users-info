@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/pkg/errors"
 	"github.com/voltento/users-info/app/config"
-	db "github.com/voltento/users-info/app/connectors/storage"
+	db "github.com/voltento/users-info/app/connectors/database"
 	"github.com/voltento/users-info/app/logger"
 	"github.com/voltento/users-info/app/service"
 	"go.uber.org/dig"
@@ -44,7 +44,7 @@ func main() {
 
 func di() (*dig.Container, error) {
 	di := dig.New()
-	err := di.Provide(db.NewPsqlStorage)
+	err := di.Provide(db.NewDataBase)
 	if err != nil {
 		return nil, err
 	}

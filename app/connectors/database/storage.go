@@ -1,4 +1,4 @@
-package storage
+package database
 
 import (
 	"context"
@@ -18,7 +18,7 @@ type dataBase struct {
 	cfg    *Config
 }
 
-func NewPsqlStorage(cfg *Config, logger *zap.SugaredLogger) (Storage, error) {
+func NewDataBase(cfg *Config, logger *zap.SugaredLogger) (Storage, error) {
 	opts, err := configToPgOptions(cfg)
 	if err != nil {
 		return nil, errors.Wrap(err, "can not create database")
