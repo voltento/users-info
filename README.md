@@ -8,34 +8,15 @@ One command start:
 ### Commands
 - `make test` run tests
 - `make test-cover` show test coverage
-- `make db-run`- run database
-- `make db-migrate` run migration
-- `make db-migrate-test` run migration for testing
 
 ### API
 - Run swagger `make swagger-ui`
 - Open `http://localhost:8084/`
 - Explore  `./swagger.yml`
 
-### Architecture 
-https://miro.com/app/board/o9J_ko_Lm30=/
-
-- connectors
-  - postgreSQl connector: get data, put data
-    - create user
-    - drop user
-Will use this https://github.com/go-pg/pg/blob/ee50368e25f8/base.go#L296
-    
-- router
-  - represents endpoints
-    - post /user
-    - delete /user 
-- health check
-
 ### TODO:
-- Pack app into docker
-- Add logger into all
 - notify mechanism
+- Add logger into all
 - add limitations for getUsers entities count
 
 
