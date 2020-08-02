@@ -6,7 +6,7 @@ import (
 )
 
 func (s *Service) PutUser(ctx *gin.Context) {
-	userParam := ctxToUser(ctx)
+	userParam := ctxPathToUser(ctx)
 	userParam.UserId = ctx.Param("user_id")
 
 	err := s.storage.UpdateUser(userParam)

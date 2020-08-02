@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func ctxToUser(ctx *gin.Context) *model.User {
+func ctxPathToUser(ctx *gin.Context) *model.User {
 	return &model.User{
 		UserId:      ctx.DefaultQuery("user_id", ""),
 		FirstName:   ctx.DefaultQuery("first_name", ""),

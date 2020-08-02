@@ -67,6 +67,7 @@ func (s *Service) ConnectHandlers() {
 	s.engine.GET("/user/:user_id", s.GetUser)
 	s.engine.DELETE("/user/:user_id", s.DeleteUser)
 	s.engine.PUT("/user/:user_id", s.PutUser)
+	s.engine.POST("/user/", s.PostUser)
 
 	s.engine.GET("/healthcheck", s.buildGetHealthCheck())
 }

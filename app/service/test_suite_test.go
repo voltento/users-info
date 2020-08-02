@@ -1,6 +1,7 @@
 package service
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"github.com/stretchr/testify/assert"
@@ -29,9 +30,10 @@ type ServiceTestSuite struct {
 	userIdToUserData    map[string]*model.User
 	testUser1           model.User
 	testUser2           model.User
+	duplicateEmail      string
 }
 
-func (suite *ServiceTestSuite) usersFunc(modelUser *model.User) ([]model.User, error) {
+func (suite *ServiceTestSuite) users(modelUser *model.User) ([]model.User, error) {
 	if len(suite.modelUserToUserData) == 0 {
 		return nil, fault.NewNotFound("no users")
 	}
@@ -41,7 +43,7 @@ func (suite *ServiceTestSuite) usersFunc(modelUser *model.User) ([]model.User, e
 	return nil, fault.NewNotFound("no users")
 }
 
-func (suite *ServiceTestSuite) userFunc(userId string) (*model.User, error) {
+func (suite *ServiceTestSuite) user(userId string) (*model.User, error) {
 	if len(userId) == 0 {
 		return nil, fault.NewBadRequest("empty user id")
 	}
@@ -56,7 +58,7 @@ func (suite *ServiceTestSuite) userFunc(userId string) (*model.User, error) {
 	return nil, fault.NewNotFound(fmt.Sprintf("no user with id '%v'", userId))
 }
 
-func (suite *ServiceTestSuite) deleteUserFunc(userId string) error {
+func (suite *ServiceTestSuite) deleteUser(userId string) error {
 	if len(userId) == 0 {
 		return fault.NewBadRequest("received empty user id")
 	}
@@ -73,7 +75,25 @@ func (suite *ServiceTestSuite) deleteUserFunc(userId string) error {
 	}
 }
 
-func (suite *ServiceTestSuite) updateUserFunc(u *model.User) error {
+func (suite *ServiceTestSuite) addUser(u *model.User) error {
+	isBadRequest := false
+	isBadRequest = isBadRequest || len(u.FirstName) == 0
+	isBadRequest = isBadRequest || len(u.LastName) == 0
+	isBadRequest = isBadRequest || len(u.Email) == 0
+	isBadRequest = isBadRequest || len(u.CountryCode) == 0
+
+	if isBadRequest {
+		return fault.NewBadRequest("bad request")
+	}
+
+	if u.Email == suite.duplicateEmail {
+		return fault.NewBadRequest("email already exists")
+	}
+
+	return nil
+}
+
+func (suite *ServiceTestSuite) updateUser(u *model.User) error {
 	isBadRequest := false
 	isBadRequest = isBadRequest || len(u.FirstName) == 0
 	isBadRequest = isBadRequest || len(u.LastName) == 0
@@ -98,7 +118,7 @@ func (suite *ServiceTestSuite) SetupTest() {
 	}
 	suite.url = "http://" + config.Address
 
-	s := storage.NewStorageMock(suite.usersFunc, suite.userFunc, suite.deleteUserFunc, suite.updateUserFunc)
+	s := storage.NewStorageMock(suite.users, suite.user, suite.deleteUser, suite.updateUser, suite.addUser)
 
 	err, service := NewService(config, logger.NewMock().Sugar(), s)
 	if err != nil {
@@ -123,6 +143,8 @@ func (suite *ServiceTestSuite) SetupTest() {
 		Email:       "testUser2_email",
 		CountryCode: "testUser2_countrycode",
 	}
+
+	suite.duplicateEmail = "exists@mail"
 
 	wg := sync.WaitGroup{}
 	wg.Add(1)
@@ -173,4 +195,57 @@ func usersToSet(users []model.User) map[model.User]struct{} {
 		result[u] = struct{}{}
 	}
 	return result
+}
+
+func httpDelete(host string) int {
+	req, err := http.NewRequest("DELETE", host, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+	return resp.StatusCode
+}
+
+func httpPut(host string) int {
+	req, err := http.NewRequest("PUT", host, nil)
+	if err != nil {
+		panic(err)
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+	return resp.StatusCode
+}
+
+func httpPost(host string, obj interface{}) int {
+	data, err := json.Marshal(obj)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	req, err := http.NewRequest("POST", host, bytes.NewReader(data))
+	if err != nil {
+		panic(err)
+	}
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+	return resp.StatusCode
 }

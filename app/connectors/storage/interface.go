@@ -10,6 +10,7 @@ type Storage interface {
 	User(userId string) (*model.User, error)
 	DropUser(userId string) error
 	UpdateUser(user *model.User) error
+	AddUser(user *model.User) error
 	Stop() error
 	Check(ctx context.Context) error
 }
