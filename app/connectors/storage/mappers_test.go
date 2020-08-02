@@ -61,7 +61,7 @@ func TestDtoUserToModelUser(t *testing.T) {
 		FirstName:   "test_firstname",
 		LastName:    "test_lastname",
 		Email:       "test_email",
-		CountryCode: "test_countrycode",
+		CountryCode: "test_country_code",
 	}
 
 	modelUser := dtoUserToModelUser(dtoUser)
@@ -78,7 +78,7 @@ func TestModelUserToDtoUserOk(t *testing.T) {
 		FirstName:   "test_firstname",
 		LastName:    "test_LastName",
 		Email:       "test_email@fo",
-		CountryCode: "test_countrycode",
+		CountryCode: "test_country_code",
 	}
 
 	dtoUser, err := modelUserToDtoUser(modelUser)

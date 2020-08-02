@@ -13,7 +13,7 @@ type (
 	AddUser    func(*model.User) error
 )
 
-type StorageMock struct {
+type Mock struct {
 	usersFunc      UsersFunc
 	userFunc       UserFunc
 	dropUserFunc   DropUser
@@ -21,34 +21,34 @@ type StorageMock struct {
 	addUserFunc    AddUser
 }
 
-func (s *StorageMock) AddUser(user *model.User) error {
+func (s *Mock) AddUser(user *model.User) error {
 	return s.addUserFunc(user)
 }
 
-func (s *StorageMock) Check(_ context.Context) error {
+func (s *Mock) Check(_ context.Context) error {
 	return nil
 }
 
-func (s *StorageMock) UpdateUser(user *model.User) error {
+func (s *Mock) UpdateUser(user *model.User) error {
 	return s.updateUserFunc(user)
 }
 
-func (s *StorageMock) DropUser(userId string) error {
+func (s *Mock) DropUser(userId string) error {
 	return s.dropUserFunc(userId)
 }
 
 func NewStorageMock(users UsersFunc, user UserFunc, drop DropUser, update UpdateUser, add AddUser) Storage {
-	return &StorageMock{usersFunc: users, userFunc: user, dropUserFunc: drop, updateUserFunc: update, addUserFunc: add}
+	return &Mock{usersFunc: users, userFunc: user, dropUserFunc: drop, updateUserFunc: update, addUserFunc: add}
 }
 
-func (s *StorageMock) Users(user *model.User) ([]model.User, error) {
+func (s *Mock) Users(user *model.User) ([]model.User, error) {
 	return s.usersFunc(user)
 }
 
-func (s *StorageMock) User(userId string) (*model.User, error) {
+func (s *Mock) User(userId string) (*model.User, error) {
 	return s.userFunc(userId)
 }
 
-func (s *StorageMock) Stop() error {
+func (s *Mock) Stop() error {
 	return nil
 }
