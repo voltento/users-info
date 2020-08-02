@@ -37,6 +37,26 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
+  /user/:
+    post:
+      summary: Add user
+      operationId: AddUser
+      parameters:
+        - $ref: '#/parameters/first_name_form_data'
+        - $ref: '#/parameters/last_name_form_data'
+        - $ref: '#/parameters/email_form_data'
+        - $ref: '#/parameters/country_code_form_data'
+      responses:
+        200:
+          description: Added successfully
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/Error'
   /user/{user_id}:
     get:
       summary: Get user by id
@@ -137,6 +157,31 @@ parameters:
   email:
     name: email
     in: query
+    description: User email
+    type: string
+
+  first_name_form_data:
+    name: first_name
+    in: formData
+    description: User first_name
+    type: string
+
+  last_name_form_data:
+    name: last_name
+    in: formData
+    description: User last_name
+    type: string
+
+
+  country_code_form_data:
+    name: country_code
+    in: formData
+    description: User country_code
+    type: string
+
+  email_form_data:
+    name: email
+    in: formData
     description: User email
     type: string
 
