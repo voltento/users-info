@@ -73,18 +73,28 @@ func TestModelUserToDtoUserOk(t *testing.T) {
 		UserId:      "2",
 		FirstName:   "test_firstname",
 		LastName:    "test_LastName",
-		Email:       "test_email",
+		Email:       "test_email@fo",
 		CountryCode: "test_countrycode",
 	}
 
 	dtoUser, err := modelUserToDtoUser(modelUser)
 
 	assert.NoError(t, err)
+	if err != nil {
+		return
+	}
+
 	assert.Equal(t, dtoUser.UserId, 2)
 	assert.Equal(t, dtoUser.FirstName, modelUser.FirstName)
 	assert.Equal(t, dtoUser.LastName, modelUser.LastName)
 	assert.Equal(t, dtoUser.Email, modelUser.Email)
 	assert.Equal(t, dtoUser.CountryCode, modelUser.CountryCode)
+}
+
+func TestModelUserToDtoUserWrongEmail(t *testing.T) {
+	modelUser := &model.User{Email: "test_email"}
+	_, err := modelUserToDtoUser(modelUser)
+	assert.Error(t, err)
 }
 
 func TestModelUserToDtoNoUserId(t *testing.T) {

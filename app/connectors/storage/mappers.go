@@ -2,6 +2,7 @@ package storage
 
 import (
 	"fmt"
+	"github.com/badoux/checkmail"
 	"github.com/go-pg/pg"
 	"github.com/pkg/errors"
 	"github.com/voltento/users-info/app/fault"
@@ -66,6 +67,12 @@ func modelUserToDtoUser(user *model.User) (*User, error) {
 		}
 
 		u.UserId = id
+	}
+
+	if len(user.Email) > 0 {
+		if err := checkmail.ValidateFormat(user.Email); err != nil {
+			return nil, fault.NewBadRequest(errors.Wrap(err, "invalid email").Error())
+		}
 	}
 
 	return u, nil

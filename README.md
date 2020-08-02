@@ -30,10 +30,8 @@ Will use this https://github.com/go-pg/pg/blob/ee50368e25f8/base.go#L296
 ### TODO:
 - Pack app into docker
 - Add logger into all
-- Integrate health check
-- notify mechanizm
-- add check if it's internal error or not
-- add limitations for getUsers enteties count
+- notify mechanism
+- add limitations for getUsers entities count
 
 
 ### Assemptations
@@ -42,5 +40,5 @@ Will use this https://github.com/go-pg/pg/blob/ee50368e25f8/base.go#L296
 
 ### Ideas for improvements
 - use migrations system f.i. https://github.com/pressly/goose
-- add country code set
+- add country code set and country code checking
 
