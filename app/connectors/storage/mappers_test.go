@@ -1,7 +1,9 @@
 package storage
 
 import (
+	"errors"
 	"github.com/stretchr/testify/assert"
+	"github.com/voltento/users-info/app/fault"
 	"github.com/voltento/users-info/app/model"
 	"testing"
 )
@@ -119,4 +121,16 @@ func TestModelUserToDtoUserWrongUserId(t *testing.T) {
 func TestConfigToPgOptionsEmpty(t *testing.T) {
 	_, err := configToPgOptions(nil)
 	assert.Error(t, err)
+}
+
+func Test_sqlErrorToErrorColumnViolationBadRequest(t *testing.T) {
+	err := errors.New("violates not-null constraint in column")
+	_, isOk := sqlErrorToError(err).(*fault.BadRequest)
+	assert.True(t, isOk)
+}
+
+func Test_sqlErrorToErrorColumnViolation(t *testing.T) {
+	err := errors.New("some error")
+	_, isOk := sqlErrorToError(err).(*fault.BadRequest)
+	assert.False(t, isOk)
 }

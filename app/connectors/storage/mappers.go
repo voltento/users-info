@@ -79,12 +79,12 @@ func modelUserToDtoUser(user *model.User) (*User, error) {
 }
 
 func sqlErrorToError(err error) error {
-	if strings.Contains(err.Error(), "violates not-null constraint") {
-		return fault.NewBadRequest(err.Error())
-	}
+	badRequestStrings := []string{"violates not-null constraint", "duplicate key value violates"}
 
-	if strings.Contains(err.Error(), "duplicate key value violates") {
-		return fault.NewBadRequest(err.Error())
+	for _, s := range badRequestStrings {
+		if strings.Contains(err.Error(), s) {
+			return fault.NewBadRequest(err.Error())
+		}
 	}
 	return err
 }
