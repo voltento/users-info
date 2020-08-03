@@ -15,7 +15,9 @@ One command start:
 - Explore  `./swagger.yml`
 
 ### TODO:
+- add functional tests
 - notify mechanism: use kafka or another centralized system
+- add validation for country code
 
 ### Assemptations
 - name, second name and email can't be longer 40 symbols
