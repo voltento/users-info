@@ -11,5 +11,9 @@ func buildUserWhereEqual(user *User, query *orm.Query) *orm.Query {
 		query = query.Where(tableColumnNameUserId+" = ?", user.UserId)
 	}
 
+	if len(user.FirstName) > 0 {
+		query = query.Where(tableColumnNameFirstName+" = ?", user.FirstName)
+	}
+
 	return query
 }

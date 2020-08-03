@@ -10,8 +10,9 @@ import (
 )
 
 const (
-	tableNameUsersInfo    = "users"
-	tableColumnNameUserId = "user_id"
+	tableNameUsersInfo       = "users"
+	tableColumnNameUserId    = "user_id"
+	tableColumnNameFirstName = "first_name"
 )
 
 // Implements modules.Storage
