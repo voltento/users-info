@@ -16,8 +16,6 @@ One command start:
 
 ### TODO:
 - notify mechanism: use kafka or another centralized system
-- Add logger into all
-
 
 ### Assemptations
 - name, second name and email can't be longer 40 symbols
