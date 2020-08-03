@@ -13,7 +13,7 @@ func (d *dataBase) DropUser(userId string) error {
 	})
 
 	if err != nil {
-		return errors.New(fmt.Sprintf("can not convert %v to user id", userId))
+		return fault.NewBadRequest(fmt.Sprintf("can not convert %v to user id", userId))
 	}
 
 	r, err := d.db.Model(ormUser).Table(tableNameUsersInfo).WherePK().Delete()

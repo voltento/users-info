@@ -19,7 +19,7 @@ services:
 
   app:
     ports:
-    - 8080:8181
+    - 8181:8181
     build: ../
 
   swaggerui:

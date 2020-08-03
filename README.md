@@ -2,12 +2,9 @@ App architecture
 
 ## Quick start
 One command start:
-- run localy with infrastructure in docker: `make app-run`
-- run in docker: `make app-run-docker`
-
-### Commands
-- `make test` run tests
-- `make test-cover` show test coverage
+- `make app-run` run localy with infrastructure in docker
+- `make app-run-docker` run in docker
+- `make test` run all tests both unit and functional. It starts the app in docker
 
 ### API
 - Run swagger `make swagger-ui`

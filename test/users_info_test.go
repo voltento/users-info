@@ -24,7 +24,7 @@ type UsersInfoTestSuite struct {
 }
 
 func (s *UsersInfoTestSuite) cleanTestData() {
-	_, users, err := s.GetUsers("?first_name=" + s.testName)
+	_, users, err := s.GetUsers()
 	if err != nil {
 		assert.NoError(s.T(), err)
 		return
@@ -96,16 +96,21 @@ func (s *UsersInfoTestSuite) DeleteUser(userId string) int {
 	return resp.StatusCode
 }
 
-func (s *UsersInfoTestSuite) GetUsers(filter string) (int, []*model.User, error) {
-	req, err := http.NewRequest("GET", s.url+"users"+filter, nil)
+func (s *UsersInfoTestSuite) GetUsers(filters ...string) (int, []*model.User, error) {
+	filter := ""
+	for _, s := range filters {
+		filter += "&" + s
+	}
+
+	req, err := http.NewRequest("GET", s.url+"users?first_name="+s.testName+filter, nil)
 	if err != nil {
-		panic(err)
+		return 0, nil, err
 	}
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		panic(err)
+		return 0, nil, err
 	}
 	defer resp.Body.Close()
 	data, err := ioutil.ReadAll(resp.Body)

@@ -3,7 +3,7 @@ CWD=`pwd`
 # app
 
 app-run-docker: db-run
-	docker-compose -f ci/docker-compose.yml up app
+	docker-compose -f ci/docker-compose.yml up -d --build app
 
 app-run: db-run app-build-localy
 	./users-info --config config/config.json
@@ -11,9 +11,26 @@ app-run: db-run app-build-localy
 app-build-localy:
 	go build -o users-info app/app.go
 
+down:
+	docker-compose -f ci/docker-compose.yml down  || exit 1
+
+# test
+test: test-unit test-functional
+
+
+# unit tests
+test-unit:
+	go test -v ./...
+
+# functional tests
+test-functional: app-run-docker
+	cd test && go test
+
 # tools
 golint:
 	 golangci-lint run
+
+precommit: golint test
 
 swagger-ui:
 	docker-compose -f ci/docker-compose.yml up -d swaggerui
@@ -23,9 +40,6 @@ migrations_path="migrations"
 db_creds="host=localhost port=5432 dbname=users-info user=users-info password=users-info"
 
 db-run: db-up db-create
-
-db-down:
-	docker-compose -f ci/docker-compose.yml down  || exit 1
 
 db-connect:
 	 psql ${db_creds}
@@ -43,14 +57,6 @@ db-create: db-ready
 
 db-ready:
 	docker-compose -f ci/docker-compose.yml up start_dependencies
-
-# test
-test:
-	go test -v ./...
-
-test-cover:
-	go test -coverprofile=coverage.out -v ./... && \
-    go tool cover -html=coverage.out
 
 
 
