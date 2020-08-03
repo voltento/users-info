@@ -17,7 +17,6 @@ down:
 # test
 test: test-unit test-functional
 
-
 # unit tests
 test-unit:
 	go test -v ./...

@@ -53,7 +53,7 @@ func (s *UsersInfoTestSuite) SetupTest() {
 		FirstName:   s.testName,
 		LastName:    "lastname2",
 		Email:       "email2@test",
-		CountryCode: "EN",
+		CountryCode: "GB",
 	}
 
 	s.cleanTestData()
