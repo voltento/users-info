@@ -1,4 +1,4 @@
-App architecture
+The application provides http interface for storing/modifying users' data.
 
 ## Quick start
 One command start:
@@ -11,16 +11,13 @@ One command start:
 - Open `http://localhost:8084/`
 - Explore  `./swagger.yml`
 
-### TODO:
-- add functional tests
-- notify mechanism: use kafka or another centralized system
-- add validation for country code
-
 ### Assemptations
 - name, second name and email can't be longer 40 symbols
 - country code can't be longer than 5 symbols
 
 ### Ideas for improvements
-- use migrations system f.i. https://github.com/pressly/goose
 - add country code set and country code checking
+- notify mechanism: use kafka or another centralized system for scalability
+- add validation for country code
+
 
