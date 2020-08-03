@@ -22,6 +22,7 @@ func (d *dataBase) UpdateUser(user *model.User) error {
 		return fault.NewNotFound(fmt.Sprintf("can not find any user by id %v", user.UserId))
 	}
 
+	d.logger.Infof("updated user. user_id '%v'", user.UserId)
 	d.consumer.UserUpdated(user)
 	return nil
 }

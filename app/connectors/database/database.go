@@ -42,10 +42,12 @@ func NewDataBase(cfg *Config, consumer consumer.Consumer, logger *zap.SugaredLog
 		return nil, errors.Wrap(err, "can not create database")
 	}
 
+	d.logger.Debug("new instance created")
 	return d, nil
 }
 
 func (d *dataBase) Stop() error {
+	d.logger.Debug("closing connection to the database")
 	return d.db.Close()
 }
 

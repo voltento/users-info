@@ -25,5 +25,7 @@ func (d *dataBase) DropUser(userId string) error {
 		return fault.NewNotFound(fmt.Sprintf("can not find any user by id %v", userId))
 	}
 
+	d.logger.Infof("dropped user. user_id '%v'", userId)
+
 	return nil
 }

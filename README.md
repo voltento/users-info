@@ -15,7 +15,7 @@ One command start:
 - Explore  `./swagger.yml`
 
 ### TODO:
-- notify mechanism
+- notify mechanism: use kafka or another centralized system
 - Add logger into all
 
 
