@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
-	"github.com/voltento/users-info/app/connectors/database"
 	"github.com/voltento/users-info/app/fault"
 	"github.com/voltento/users-info/app/logger"
 	"github.com/voltento/users-info/app/model"
+	"github.com/voltento/users-info/app/modules/storage"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -118,7 +118,7 @@ func (suite *ServiceTestSuite) SetupTest() {
 	}
 	suite.url = "http://" + config.Address
 
-	s := database.NewStorageMock(suite.users, suite.user, suite.deleteUser, suite.updateUser, suite.addUser)
+	s := storage.NewStorageMock(suite.users, suite.user, suite.deleteUser, suite.updateUser, suite.addUser)
 
 	err, service := NewService(config, logger.NewMock().Sugar(), s)
 	if err != nil {

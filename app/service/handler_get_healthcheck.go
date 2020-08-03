@@ -7,9 +7,7 @@ import (
 
 func (s *Service) buildGetHealthCheck() func(*gin.Context) {
 	opts := []hc.Option{
-		hc.WithChecker(
-			"database", s.storage,
-		),
+		hc.WithChecker("database", s.storage),
 	}
 
 	return gin.WrapH(hc.Handler(opts...))

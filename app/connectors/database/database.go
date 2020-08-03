@@ -4,6 +4,8 @@ import (
 	"context"
 	"github.com/go-pg/pg"
 	"github.com/pkg/errors"
+	"github.com/voltento/users-info/app/modules/consumer"
+	"github.com/voltento/users-info/app/modules/storage"
 	"go.uber.org/zap"
 )
 
@@ -12,22 +14,25 @@ const (
 	tableColumnNameUserId = "user_id"
 )
 
+// Implements modules.Storage
 type dataBase struct {
-	db     *pg.DB
-	logger *zap.SugaredLogger
-	cfg    *Config
+	consumer consumer.Consumer
+	db       *pg.DB
+	logger   *zap.SugaredLogger
+	cfg      *Config
 }
 
-func NewDataBase(cfg *Config, logger *zap.SugaredLogger) (Storage, error) {
+func NewDataBase(cfg *Config, consumer consumer.Consumer, logger *zap.SugaredLogger) (storage.Storage, error) {
 	opts, err := configToPgOptions(cfg)
 	if err != nil {
 		return nil, errors.Wrap(err, "can not create database")
 	}
 
 	d := &dataBase{
-		db:     pg.Connect(opts),
-		logger: logger.Named("psqlstorage"),
-		cfg:    cfg,
+		db:       pg.Connect(opts),
+		logger:   logger.Named("psqlstorage"),
+		cfg:      cfg,
+		consumer: consumer,
 	}
 
 	d.logDbConnection()

@@ -15,5 +15,6 @@ func (d *dataBase) AddUser(user *model.User) error {
 		return sqlErrorToError(errors.Wrap(err, "query processing error"))
 	}
 
+	d.consumer.UserUpdated(user)
 	return nil
 }

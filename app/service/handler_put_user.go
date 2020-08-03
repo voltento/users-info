@@ -6,10 +6,10 @@ import (
 )
 
 func (s *Service) PutUser(ctx *gin.Context) {
-	userParam := ctxPathToUser(ctx)
-	userParam.UserId = ctx.Param("user_id")
+	user := ctxPathToUser(ctx)
+	user.UserId = ctx.Param("user_id")
 
-	err := s.storage.UpdateUser(userParam)
+	err := s.storage.UpdateUser(user)
 	if err != nil {
 		putErrToCtx(err, ctx)
 		return

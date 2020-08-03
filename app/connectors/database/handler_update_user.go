@@ -14,7 +14,6 @@ func (d *dataBase) UpdateUser(user *model.User) error {
 	}
 
 	r, err := d.db.Model(dtoModel).WherePK().Update()
-
 	if err != nil {
 		return sqlErrorToError(errors.Wrap(err, "query processing error"))
 	}
@@ -23,5 +22,6 @@ func (d *dataBase) UpdateUser(user *model.User) error {
 		return fault.NewNotFound(fmt.Sprintf("can not find any user by id %v", user.UserId))
 	}
 
+	d.consumer.UserUpdated(user)
 	return nil
 }
